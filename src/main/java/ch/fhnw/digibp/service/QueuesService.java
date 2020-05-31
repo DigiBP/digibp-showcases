@@ -39,9 +39,7 @@ public class QueuesService {
     }
 
     public Object take(String traceId, String topic) throws InterruptedException {
-        if(!queues.containsKey(getKey(traceId, topic))){
-            return null;
-        }
+        createQueueIfNotExists(traceId, topic);
         Object object = queues.get(getKey(traceId, topic)).take();
         queues.remove(getKey(traceId, topic));
         return object;

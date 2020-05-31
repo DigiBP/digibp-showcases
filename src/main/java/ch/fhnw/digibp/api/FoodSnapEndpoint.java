@@ -45,10 +45,11 @@ public class FoodSnapEndpoint {
         map.put("messageName", "food-shot-service-ai_order-received");
         map.put("businessKey", UUID.randomUUID().toString());
         map.put("tenantId", camundaTenantId);
+        map.put("resultEnabled", true);
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(map, headers);
         ResponseEntity<JsonNode> response = restTemplate.postForEntity(camundaRestUrl + "/message", entity, JsonNode.class);
         if(response.getStatusCode() == HttpStatus.OK){
-            processInstanceId = Objects.requireNonNull(response.getBody()).path("id").asText();
+            processInstanceId = Objects.requireNonNull(response.getBody()).get(0).path("processInstance").path("id").asText();
         }
         if(processInstanceId!=null) {
             queuesService.put(processInstanceId, "ClassifyFood", foodSnapRequest);
