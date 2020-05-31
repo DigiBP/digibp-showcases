@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.11.3">
+  <bpmn:collaboration id="Collaboration_0pm9ooe">
+    <bpmn:participant id="Participant_1vh8c2p" name="Food Service - Courier Employee Journey" processRef="Process_0e4ao9a" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_0e4ao9a" isExecutable="false">
+    <bpmn:laneSet>
+      <bpmn:lane id="Lane_1im18w9" name="Very gratifying">
+        <bpmn:flowNodeRef>Task_1gkh2bb</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_1hku2so</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_1usvvnn" name="Satisfy" />
+      <bpmn:lane id="Lane_0scpxys" name="Natural">
+        <bpmn:flowNodeRef>Task_1l7voht</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_106iob9</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_092synt" name="Bad" />
+      <bpmn:lane id="Lane_1j14go3" name="Horrible" />
+    </bpmn:laneSet>
+    <bpmn:task id="Task_1l7voht" name="Deliver pizza">
+      <bpmn:outgoing>SequenceFlow_0q36oh3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_106iob9" name="Receive payment">
+      <bpmn:incoming>SequenceFlow_0q36oh3</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_09y12cl</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_1gkh2bb" name="Ask for Email receipt">
+      <bpmn:incoming>SequenceFlow_09y12cl</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_06611hv</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="SequenceFlow_0q36oh3" sourceRef="Task_1l7voht" targetRef="Task_106iob9" />
+    <bpmn:sequenceFlow id="SequenceFlow_09y12cl" sourceRef="Task_106iob9" targetRef="Task_1gkh2bb" />
+    <bpmn:task id="Task_1hku2so" name="Trigger receipt Email">
+      <bpmn:incoming>SequenceFlow_06611hv</bpmn:incoming>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="SequenceFlow_06611hv" sourceRef="Task_1gkh2bb" targetRef="Task_1hku2so" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0pm9ooe">
+      <bpmndi:BPMNShape id="Participant_1vh8c2p_di" bpmnElement="Participant_1vh8c2p">
+        <dc:Bounds x="114" y="-1" width="957" height="610" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1im18w9_di" bpmnElement="Lane_1im18w9" bioc:stroke="#43A047" bioc:fill="#C8E6C9">
+        <dc:Bounds x="144" y="-1" width="927" height="125" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1usvvnn_di" bpmnElement="Lane_1usvvnn" bioc:stroke="#1E88E5" bioc:fill="#BBDEFB">
+        <dc:Bounds x="144" y="124" width="927" height="125" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0scpxys_di" bpmnElement="Lane_0scpxys">
+        <dc:Bounds x="144" y="249" width="927" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_092synt_di" bpmnElement="Lane_092synt" bioc:stroke="#FB8C00" bioc:fill="#FFE0B2">
+        <dc:Bounds x="144" y="369" width="927" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1j14go3_di" bpmnElement="Lane_1j14go3" bioc:stroke="#E53935" bioc:fill="#FFCDD2">
+        <dc:Bounds x="144" y="489" width="927" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_1l7voht_di" bpmnElement="Task_1l7voht">
+        <dc:Bounds x="203" y="272" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_106iob9_di" bpmnElement="Task_106iob9">
+        <dc:Bounds x="376" y="272" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_1gkh2bb_di" bpmnElement="Task_1gkh2bb">
+        <dc:Bounds x="544" y="13" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0q36oh3_di" bpmnElement="SequenceFlow_0q36oh3">
+        <di:waypoint xsi:type="dc:Point" x="303" y="312" />
+        <di:waypoint xsi:type="dc:Point" x="376" y="312" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="339.5" y="291" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_09y12cl_di" bpmnElement="SequenceFlow_09y12cl">
+        <di:waypoint xsi:type="dc:Point" x="476" y="312" />
+        <di:waypoint xsi:type="dc:Point" x="510" y="312" />
+        <di:waypoint xsi:type="dc:Point" x="510" y="53" />
+        <di:waypoint xsi:type="dc:Point" x="544" y="53" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="525" y="176.5" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Task_1hku2so_di" bpmnElement="Task_1hku2so">
+        <dc:Bounds x="676" y="13" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_06611hv_di" bpmnElement="SequenceFlow_06611hv">
+        <di:waypoint xsi:type="dc:Point" x="644" y="53" />
+        <di:waypoint xsi:type="dc:Point" x="676" y="53" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="660" y="32" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

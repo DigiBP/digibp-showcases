@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>food-snap</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" />
+    <link rel="stylesheet" href="assets/styles.css">
+</head>
+
+<body>
+<div class="modal fade" id="resultModal" role="dialog" tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">SNAP Food Order</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <p id="result"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-light" type="button" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container" id="formContainer">
+    <h2 class="text-center" style="margin-top:8px;">SNAP your Food</h2>
+    <form id="form">
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-prepend"><span class="input-group-text">Name</span></div>
+                <input class="form-control" type="text" name="customerName"></div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-prepend"><span class="input-group-text">Address</span></div>
+                <input class="form-control" type="text" name="customerAddress"></div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-prepend"><span class="input-group-text">Email</span></div>
+                <input class="form-control" type="email" name="customerEmail"></div>
+        </div>
+		<div class="input-group mb-3">
+			<div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-file-image"></i></span></div>
+			<input type="text" class="form-control input-lg" disabled placeholder="Upload Image">
+			<input type="file" class="file" name="imageFile" id="imageFile">
+			<div class="input-group-append">
+				<button class="browse btn btn-primary" type="button"><i class="fas fa-search"></i> SNAP</button>
+			</div>
+		</div>
+        <div class="btn-group btn-block" role="group">
+            <button class="btn btn-primary btn-block" type="submit">Send</button>
+        </div>
+    </form>
+</div>
+<div id="loader"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/js/bootstrap.bundle.min.js"></script>
+<script src="assets/app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/1.0" id="Definitions_0ned24h" name="DRD" namespace="http://camunda.org/schema/1.0/dmn">
+  <decision id="service_decision" name="Prepare Service Decision">
+    <extensionElements>
+      <biodi:bounds x="229" y="152" width="180" height="80" />
+      <biodi:edge source="Decision_0nx1ygm">
+        <biodi:waypoints x="200" y="304" />
+        <biodi:waypoints x="325" y="232" />
+      </biodi:edge>
+      <biodi:edge source="Decision_1yeans3">
+        <biodi:waypoints x="422" y="302" />
+        <biodi:waypoints x="381" y="232" />
+      </biodi:edge>
+    </extensionElements>
+    <informationRequirement>
+      <requiredDecision href="#Decision_0nx1ygm" />
+    </informationRequirement>
+    <informationRequirement>
+      <requiredDecision href="#Decision_1yeans3" />
+    </informationRequirement>
+    <decisionTable id="decisionTable_1">
+      <input id="input_1" label="Food Class Match">
+        <inputExpression id="inputExpression_1" typeRef="boolean">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_15jfwpf" label="Food Score">
+        <inputExpression id="LiteralExpression_01mrtdc" typeRef="double">
+          <text>foodScore</text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="Type of Food" name="foodType" typeRef="string" />
+      <rule id="DecisionRule_1pqzdrk">
+        <inputEntry id="UnaryTests_0vgq4y8" expressionLanguage="javascript">
+          <text>(/pasta|spaghetti|penne|ravioli/i).test(foodClass)</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0py2qzv">
+          <text>&gt;= 0.7</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_09k2h2b">
+          <text>"pasta"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1euo386">
+        <inputEntry id="UnaryTests_141x4oh" expressionLanguage="javascript">
+          <text>(/pizza|calzone/i).test(foodClass)</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1g9k55t">
+          <text>&gt;= 0.5</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1nol8qg">
+          <text>"pizza"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1v28x0p">
+        <inputEntry id="UnaryTests_0ng1pbj" expressionLanguage="javascript">
+          <text>(/sushi|sashimi/i).test(foodClass)</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1he61d7">
+          <text>&gt;= 0.5</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1lkbgtg">
+          <text>"sushi"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1wkms5x">
+        <inputEntry id="UnaryTests_0alszwl" expressionLanguage="javascript">
+          <text>(/udon|somen|soba|ramen/i).test(foodClass)</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0hyp46b">
+          <text>&gt;= 0.5</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1p2f25t">
+          <text>"somen"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_12fvb2m">
+        <inputEntry id="UnaryTests_02nhzos" expressionLanguage="javascript">
+          <text>(/fondue|rösti|roesti|raclette/i).test(foodClass)</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1us4mie">
+          <text>&gt;= 0.5</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0geti1l">
+          <text>"swiss"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_0nx1ygm" name="Food Class">
+    <extensionElements>
+      <biodi:bounds x="104" y="304" width="180" height="80" />
+    </extensionElements>
+    <variable id="InformationItem_1r0dh32" name="foodClass" typeRef="string" />
+    <literalExpression id="LiteralExpression_1m4nvax" expressionLanguage="juel">
+      <text>classes.prop("class").value()</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1yeans3" name="Food Score">
+    <extensionElements>
+      <biodi:bounds x="355" y="302" width="180" height="80" />
+    </extensionElements>
+    <variable id="InformationItem_0m5t73q" name="foodScore" typeRef="double" />
+    <literalExpression id="LiteralExpression_1mrebns" expressionLanguage="juel">
+      <text>classes.prop("score").value()</text>
+    </literalExpression>
+  </decision>
+</definitions>

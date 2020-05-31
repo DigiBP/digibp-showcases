@@ -1,0 +1,11 @@
+camunda-rest:
+  url: ${CAMUNDA_REST_URL:https://digibp.herokuapp.com/rest}
+  tenantid: ${CAMUNDA_TENANT_ID:showcase}
+
+spring:
+  profiles:
+    active: local
+  servlet:
+    multipart:
+      max-file-size: 10000000
+      max-request-size: 10000000

@@ -1,0 +1,4 @@
+service:
+  ibm-watson-visual-recognition:
+    URL: ${IBM_WATSON_VISUAL_RECOGNITION_URL}
+    APIKEY: ${IBM_WATSON_VISUAL_RECOGNITION_APIKEY}

@@ -1,0 +1,73 @@
+<!--
+  ~ Copyright (c) 2018. University of Applied Sciences and Arts Northwestern Switzerland FHNW.
+  ~ All rights reserved.
+  -->
+
+<form>
+
+    <div class="form-group">
+        <label for="customerName">Name:</label>
+
+        <input type="text" id="customerName"
+               cam-variable-name="customerName"
+               cam-variable-type="String"
+               class="form-control" readonly/>
+    </div>
+
+    <div class="form-group">
+        <label for="customerAddress">Address:</label>
+
+        <input type="text" id="customerAddress"
+               cam-variable-name="customerAddress"
+               cam-variable-type="String"
+               class="form-control" readonly/>
+    </div>
+
+    <div class="form-group">
+        <label for="customerEmail">Email:</label>
+
+        <input type="text" id="customerEmail"
+               cam-variable-name="customerEmail"
+               cam-variable-type="String"
+               class="form-control" readonly/>
+    </div>
+
+    <div class="form-group">
+        <label for="foodClassesCollection">Food Classification Data:</label>
+
+        <input type="text" id="foodClassesCollection"
+               cam-variable-name="foodClassesCollection"
+               cam-variable-type="String"
+               class="form-control" readonly/>
+    </div>
+
+    <div class="form-group">
+        <label for="foodClasses">Food Classes:</label>
+
+        <input type="text" id="foodClasses"
+               cam-variable-name="foodClasses"
+               cam-variable-type="String"
+               class="form-control" readonly/>
+    </div>
+
+    <div class="form-group">
+        <label for="foodType">Food Type:</label>
+
+        <input type="text" id="foodType"
+               cam-variable-name="foodType"
+               cam-variable-type="String"
+               class="form-control" readonly/>
+    </div>
+
+    <div class="form-group">
+        <label for="imageFile">Image:</label>
+
+        <!-- make sure the file is fetched. Alternative: use javascript -->
+        <input type="hidden" id="imageFile"
+               cam-variable-name="imageFile"/>
+
+        <!-- set contentUrl as src of the image-->
+        <img src="{{ camForm.variableManager.variable('imageFile').contentUrl }}" class="img-responsive">
+    </div>
+
+</form>

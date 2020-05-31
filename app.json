@@ -1,0 +1,18 @@
+{
+  "env": {
+    "CAMUNDA_REST_URL": {
+      "description": "Camunda REST URL",
+      "value": "https://digibp.herokuapp.com/rest"
+    },
+    "CAMUNDA_TENANT_ID": {
+      "description": "Camunda Tenant ID",
+      "value": "showcase"
+    },
+    "IBM_WATSON_VISUAL_RECOGNITION_URL": {
+      "description": "IBM WATSON VISUAL URL"
+    },
+    "IBM_WATSON_VISUAL_RECOGNITION_APIKEY": {
+      "description": "IBM WATSON VISUAL API Key"
+    }
+  }
+}
