@@ -11,14 +11,14 @@ import org.springframework.context.annotation.Scope;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.TransferQueue;
 
 @Configuration
-public class QueuesConfiguration {
+public class TransferQueuesConfig {
 
-    @Bean(name = "queues")
+    @Bean(name = "transferQueues")
     @Scope("singleton")
-    public Map<String, BlockingQueue<Object>> createQueues(){
+    public Map<Object, TransferQueue<Object>> createTransferQueues(){
         return new HashMap<>();
     }
 }

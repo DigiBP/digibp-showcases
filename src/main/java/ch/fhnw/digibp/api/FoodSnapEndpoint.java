@@ -5,7 +5,7 @@
 
 package ch.fhnw.digibp.api;
 
-import ch.fhnw.digibp.service.QueuesService;
+import ch.fhnw.digibp.service.TransferService;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +22,7 @@ import java.util.*;
 public class FoodSnapEndpoint {
 
     @Autowired
-    QueuesService queuesService;
+    TransferService transferService;
 
     @Autowired
     RestTemplateBuilder restTemplateBuilder;
@@ -52,8 +52,8 @@ public class FoodSnapEndpoint {
             processInstanceId = Objects.requireNonNull(response.getBody()).get(0).path("processInstance").path("id").asText();
         }
         if(processInstanceId!=null) {
-            queuesService.put(processInstanceId, "ClassifyFood", foodSnapRequest);
-            String result = (String) queuesService.poll(processInstanceId, "FoodSnapResponse", 30);
+            transferService.put(processInstanceId, "ClassifyFood", foodSnapRequest);
+            String result = (String) transferService.poll(processInstanceId, "FoodSnapResponse", 30);
             if (result != null) {
                 return new FoodSnapResponse(result);
             }

@@ -7,7 +7,7 @@ package ch.fhnw.digibp.client;
 
 import ch.fhnw.digibp.api.FoodSnapEndpoint;
 import ch.fhnw.digibp.service.FileSenderService;
-import ch.fhnw.digibp.service.QueuesService;
+import ch.fhnw.digibp.service.TransferService;
 import org.camunda.bpm.client.ExternalTaskClient;
 import org.camunda.bpm.client.task.ExternalTask;
 import org.camunda.bpm.client.task.ExternalTaskService;
@@ -26,7 +26,7 @@ public class FoodSnapClient {
     ExternalTaskClient client;
 
     @Autowired
-    QueuesService queuesService;
+    TransferService transferService;
 
     @Autowired
     FileSenderService fileSenderService;
@@ -47,8 +47,8 @@ public class FoodSnapClient {
                 .handler((ExternalTask externalTask, ExternalTaskService externalTaskService) -> {
                     try {
                         String processInstanceId = externalTask.getProcessInstanceId();
-                        FoodSnapEndpoint.FoodSnapRequest foodSnapRequest = (FoodSnapEndpoint.FoodSnapRequest) queuesService.take(processInstanceId, "ClassifyFood");
-                        queuesService.put(processInstanceId, "FoodClassified", foodSnapRequest);
+                        FoodSnapEndpoint.FoodSnapRequest foodSnapRequest = (FoodSnapEndpoint.FoodSnapRequest) transferService.take(processInstanceId, "ClassifyFood");
+                        transferService.put(processInstanceId, "FoodClassified", foodSnapRequest);
                         Map<String, Object> variables = new HashMap<>();
                         variables.put("classificationResponse", fileSenderService.sendBinary(ibmURL, foodSnapRequest.getImageFile(), "apikey", ibmAPIKEY));
 
@@ -64,7 +64,7 @@ public class FoodSnapClient {
                 .handler((ExternalTask externalTask, ExternalTaskService externalTaskService) -> {
                     try {
                         String processInstanceId = externalTask.getProcessInstanceId();
-                        FoodSnapEndpoint.FoodSnapRequest foodSnapRequest = (FoodSnapEndpoint.FoodSnapRequest) queuesService.take(processInstanceId, "FoodClassified");
+                        FoodSnapEndpoint.FoodSnapRequest foodSnapRequest = (FoodSnapEndpoint.FoodSnapRequest) transferService.take(processInstanceId, "FoodClassified");
 
                         if(foodSnapRequest != null) {
                             Map<String, Object> variables = new HashMap<>();
@@ -77,9 +77,9 @@ public class FoodSnapClient {
                             String foodType = externalTask.getVariable("foodType");
 
                             if (foodType == null) {
-                                queuesService.put(processInstanceId, "FoodSnapResponse", "Your food will be manually classified. Watson classified it as: " + foodClasses);
+                                transferService.put(processInstanceId, "FoodSnapResponse", "Your food will be manually classified. Watson classified it as: " + foodClasses);
                             } else {
-                                queuesService.put(processInstanceId, "FoodSnapResponse", "Your food has been classified as: " + foodType + ". Watson classified it as: " + foodClasses);
+                                transferService.put(processInstanceId, "FoodSnapResponse", "Your food has been classified as: " + foodType + ". Watson classified it as: " + foodClasses);
                             }
                             externalTaskService.complete(externalTask, variables);
                         } else {
