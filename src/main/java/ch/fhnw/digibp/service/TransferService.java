@@ -88,5 +88,33 @@ public class TransferService {
             return result;
         }
     }
+
+    public void publish(String traceId, String topic, Object payload) {
+        new Thread(() -> {
+            try {
+                transfer(traceId, topic, payload);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+    public void subscribe(String traceId, String topic, TransferHandler transferHandler) {
+        new Thread(() -> {
+            while (!Thread.currentThread().isInterrupted()) {
+                try {
+                    Object object = take(traceId, topic);
+                    transferHandler.execute(object);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    @FunctionalInterface
+    public interface TransferHandler {
+        void execute(Object payload) throws InterruptedException;
+    }
 }
 
