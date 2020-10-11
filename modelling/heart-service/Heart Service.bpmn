@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<semantic:definitions xmlns:semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:dmn="http://www.omg.org/spec/DMN/20180521/MODEL/" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:trisobpmn="http://www.trisotech.com/2014/triso/bpmn" xmlns:triso="http://www.trisotech.com/2015/triso/modeling" xmlns:feel="http://www.omg.org/spec/DMN/20180521/FEEL/" xmlns:trisofeed="http://trisotech.com/feed" xmlns:bpsim="http://www.bpsim.org/schemas/1.0" xmlns:rss="http://purl.org/rss/2.0/" xmlns:drools="http://www.jboss.org/drools" xmlns:openapi="https://openapis.org/omg/extension/1.0" xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://www.trisotech.com/definitions/_e8c58c18-64b3-4a1f-8c0a-012857dddef2" id="_e8c58c18-64b3-4a1f-8c0a-012857dddef2" name="Drawing 1" targetNamespace="http://www.trisotech.com/definitions/_e8c58c18-64b3-4a1f-8c0a-012857dddef2" expressionLanguage="http://www.omg.org/spec/DMN/20180521/FEEL/" typeLanguage="http://www.trisotech.com/2015/triso/modeling/ItemDefinitionType" exporter="Camunda Modeler" exporterVersion="4.2.0" trisobpmn:logoChoice="Default">
+  <semantic:itemDefinition id="_triso-default-bpmnItemDefinition-string_id" structureRef="feel:string" triso:basicType="true" triso:definitionType="http://www.trisotech.com/2015/triso/modeling/ItemDefinitionType" triso:name="triso_string" />
+  <semantic:category id="_73265178-402b-4b51-83a7-bd436abf5f6b">
+    <semantic:categoryValue id="_f25085e8-14e9-4937-b4dc-e7a604ee45da" value="Sensitive data use" />
+  </semantic:category>
+  <semantic:category id="_581ee2a4-bd29-4a63-848c-4372ca9312ff">
+    <semantic:categoryValue id="_b202a480-fe26-473f-9f00-5624b0b855a5" value="Sensitive data use" />
+  </semantic:category>
+  <semantic:collaboration id="Collaboration_0az3hz8dd">
+    <semantic:participant id="Participant_1fjwk51de" name="Heart Service" processRef="Process_1a44lers6" />
+    <semantic:group id="_da10c6ad-e284-4b91-b4a2-ccf7a42e42d8" categoryValueRef="CategoryValue_0zgyprk" />
+    <semantic:group id="_277a8b45-0ab6-43e6-a93a-5bb437674cf3" categoryValueRef="CategoryValue_13qgnon" />
+  </semantic:collaboration>
+  <semantic:process id="Process_1a44lers6" name="Process 1" isClosed="false" isExecutable="true" triso:defaultName="true">
+    <semantic:subProcess id="_56a14f29-5559-4165-b7a7-17b549ac8773" name="Emergency" triggeredByEvent="true">
+      <semantic:userTask id="_f24d5e15-5d3e-4aa1-87df-0af886f9d251" name="Contact patient" implementation="##unspecified" camunda:formKey="embedded:deployment:healthExpert.html">
+        <semantic:incoming>Flow_0xg5iuy</semantic:incoming>
+        <semantic:outgoing>_4b776b48-3d03-48b5-88d4-4a76a7d51560</semantic:outgoing>
+      </semantic:userTask>
+      <semantic:startEvent id="_63ff6d79-fea6-4021-a9ba-7ec3301c0adf" name="Emergency&#10;occurred">
+        <semantic:outgoing>_fad67562-013c-4656-9c7b-10d70919d49e</semantic:outgoing>
+        <semantic:errorEventDefinition id="_2e81fe54-e6d4-4025-ad92-c6cba1874cea" errorRef="Error_09reou1" />
+      </semantic:startEvent>
+      <semantic:sequenceFlow id="_fad67562-013c-4656-9c7b-10d70919d49e" sourceRef="_63ff6d79-fea6-4021-a9ba-7ec3301c0adf" targetRef="Event_0m5ef89" />
+      <semantic:sequenceFlow id="_4b776b48-3d03-48b5-88d4-4a76a7d51560" sourceRef="_f24d5e15-5d3e-4aa1-87df-0af886f9d251" targetRef="_4e5ed499-783a-4ab8-b98e-28044ade9fb7" />
+      <semantic:sequenceFlow id="Flow_0xg5iuy" sourceRef="Event_0m5ef89" targetRef="_f24d5e15-5d3e-4aa1-87df-0af886f9d251" />
+      <semantic:intermediateThrowEvent id="Event_0m5ef89" name="Critical blood pressure verified">
+        <semantic:incoming>_fad67562-013c-4656-9c7b-10d70919d49e</semantic:incoming>
+        <semantic:outgoing>Flow_0xg5iuy</semantic:outgoing>
+        <semantic:messageEventDefinition id="MessageEventDefinition_11x87lh" camunda:type="external" camunda:topic="NotNormalBloodPressureVerified" />
+      </semantic:intermediateThrowEvent>
+      <semantic:endEvent id="_4e5ed499-783a-4ab8-b98e-28044ade9fb7" name="Emergency&#10;treated">
+        <semantic:incoming>_4b776b48-3d03-48b5-88d4-4a76a7d51560</semantic:incoming>
+        <semantic:messageEventDefinition id="MessageEventDefinition_0nqj2s4" camunda:type="external" camunda:topic="EmergencyTreated" />
+      </semantic:endEvent>
+    </semantic:subProcess>
+    <semantic:businessRuleTask id="_8804b67b-051b-44f3-9146-f9ae58b2c64f" name="Determine blood pressure category" implementation="##unspecified" camunda:resultVariable="category" camunda:decisionRef="BloodPressureCategory" camunda:mapDecisionResult="singleEntry">
+      <semantic:incoming>_d5969648-feac-445c-b936-cf063cfd7cd4</semantic:incoming>
+      <semantic:outgoing>_995b0c98-59b6-4865-8818-733da5cf6f83</semantic:outgoing>
+    </semantic:businessRuleTask>
+    <semantic:exclusiveGateway id="_e7df93e4-628f-46b0-a15c-618201d96a08" name="Blood pressure category?" gatewayDirection="Diverging">
+      <semantic:incoming>_995b0c98-59b6-4865-8818-733da5cf6f83</semantic:incoming>
+      <semantic:outgoing>_47d13361-ce2e-45f6-a269-16b63d21631e</semantic:outgoing>
+      <semantic:outgoing>_3990b3b9-6f30-4382-9cf8-1a86a161a9af</semantic:outgoing>
+    </semantic:exclusiveGateway>
+    <semantic:startEvent id="_f95f5872-b6bf-42af-be16-2e8e3f898bad" name="New blood pressure values received">
+      <semantic:outgoing>_d5969648-feac-445c-b936-cf063cfd7cd4</semantic:outgoing>
+      <semantic:messageEventDefinition id="_0d994e2a-a006-4c47-9ccd-e2885ef61641" messageRef="Message_15g6c1p" />
+    </semantic:startEvent>
+    <semantic:serviceTask id="_24e548fe-b5ef-4250-9ec6-4d1d52c0b54e" name="Retrieve patient personal data" implementation="##WebService" camunda:type="external" camunda:topic="RetrievePatientPersonalData">
+      <semantic:incoming>Flow_1hbjeq9</semantic:incoming>
+      <semantic:outgoing>_68b77c40-8247-4f3f-8769-74f6ee6c3570</semantic:outgoing>
+    </semantic:serviceTask>
+    <semantic:sendTask id="_0084fae0-4385-4057-b1b4-9bf5bbb67e38" name="Invite for consultation" implementation="##WebService">
+      <semantic:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="url">
+              <camunda:script scriptFormat="JavaScript">baseURL + "api/heart/v1/email";</camunda:script>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="method">POST</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Content-Type">application/json</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="payload">
+              <camunda:script scriptFormat="JavaScript">out = JSON.stringify({
+    "email": patientEmail
+});</camunda:script>
+            </camunda:inputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+      </semantic:extensionElements>
+      <semantic:incoming>_68b77c40-8247-4f3f-8769-74f6ee6c3570</semantic:incoming>
+      <semantic:outgoing>_fe31be84-18e9-407b-bd26-9b4f817a8bc2</semantic:outgoing>
+    </semantic:sendTask>
+    <semantic:userTask id="_91b94bf7-0597-4a79-aaa3-94914db0b483" name="Do consultation" implementation="##unspecified" camunda:formKey="embedded:deployment:healthExpert.html">
+      <semantic:incoming>_fe31be84-18e9-407b-bd26-9b4f817a8bc2</semantic:incoming>
+      <semantic:outgoing>_42fadf2e-b2a0-4db3-931f-cdb081f2e247</semantic:outgoing>
+    </semantic:userTask>
+    <semantic:endEvent id="_b8cae137-9d37-4367-a68a-3012c5849142" name="Diagnosis made">
+      <semantic:incoming>_42fadf2e-b2a0-4db3-931f-cdb081f2e247</semantic:incoming>
+      <semantic:messageEventDefinition id="_f0e9c0d9-1b9b-4c6a-9487-6793fcb5e6c8" camunda:type="external" camunda:topic="DiagnosisMade" />
+    </semantic:endEvent>
+    <semantic:boundaryEvent id="_7b2daf87-e8c0-4811-a472-c9710a07cd10" name="Hypertensive&#10;crisis reached" attachedToRef="_8804b67b-051b-44f3-9146-f9ae58b2c64f">
+      <semantic:outgoing>_2226da71-da25-4556-b5d3-0f486238a8bd</semantic:outgoing>
+      <semantic:conditionalEventDefinition id="_0a527c71-e546-4111-940e-01dcd4c2c09d">
+        <semantic:condition xsi:type="semantic:tFormalExpression">${category=="Hypertensive Crisis"}</semantic:condition>
+      </semantic:conditionalEventDefinition>
+    </semantic:boundaryEvent>
+    <semantic:sequenceFlow id="_d5969648-feac-445c-b936-cf063cfd7cd4" sourceRef="_f95f5872-b6bf-42af-be16-2e8e3f898bad" targetRef="_8804b67b-051b-44f3-9146-f9ae58b2c64f" />
+    <semantic:sequenceFlow id="_995b0c98-59b6-4865-8818-733da5cf6f83" sourceRef="_8804b67b-051b-44f3-9146-f9ae58b2c64f" targetRef="_e7df93e4-628f-46b0-a15c-618201d96a08" />
+    <semantic:sequenceFlow id="_3990b3b9-6f30-4382-9cf8-1a86a161a9af" name="normal or&#10;elevated" sourceRef="_e7df93e4-628f-46b0-a15c-618201d96a08" targetRef="_6d3756f1-b696-4c04-8ad1-fcc2e6acf327">
+      <semantic:conditionExpression xsi:type="semantic:tFormalExpression">${category=="Normal"||category=="Elevated"}</semantic:conditionExpression>
+    </semantic:sequenceFlow>
+    <semantic:sequenceFlow id="_42fadf2e-b2a0-4db3-931f-cdb081f2e247" sourceRef="_91b94bf7-0597-4a79-aaa3-94914db0b483" targetRef="_b8cae137-9d37-4367-a68a-3012c5849142" />
+    <semantic:sequenceFlow id="_2226da71-da25-4556-b5d3-0f486238a8bd" sourceRef="_7b2daf87-e8c0-4811-a472-c9710a07cd10" targetRef="_7cfa0430-aa42-4a1a-889c-48819706457f" />
+    <semantic:sequenceFlow id="_fe31be84-18e9-407b-bd26-9b4f817a8bc2" sourceRef="_0084fae0-4385-4057-b1b4-9bf5bbb67e38" targetRef="_91b94bf7-0597-4a79-aaa3-94914db0b483" />
+    <semantic:sequenceFlow id="_68b77c40-8247-4f3f-8769-74f6ee6c3570" sourceRef="_24e548fe-b5ef-4250-9ec6-4d1d52c0b54e" targetRef="_0084fae0-4385-4057-b1b4-9bf5bbb67e38" />
+    <semantic:sequenceFlow id="_47d13361-ce2e-45f6-a269-16b63d21631e" name="hypertension&#10;stage 1 and 2, or hypotension" sourceRef="_e7df93e4-628f-46b0-a15c-618201d96a08" targetRef="Event_0wf2b82">
+      <semantic:conditionExpression xsi:type="semantic:tFormalExpression">${category!="Normal"||category!="Elevated"}</semantic:conditionExpression>
+    </semantic:sequenceFlow>
+    <semantic:endEvent id="_6d3756f1-b696-4c04-8ad1-fcc2e6acf327" name="Normal/elevated blood pressure values confirmed">
+      <semantic:incoming>_3990b3b9-6f30-4382-9cf8-1a86a161a9af</semantic:incoming>
+      <semantic:messageEventDefinition id="MessageEventDefinition_104fbcj" camunda:type="external" camunda:topic="BloodPressureVerified" />
+    </semantic:endEvent>
+    <semantic:sequenceFlow id="Flow_1hbjeq9" sourceRef="Event_0wf2b82" targetRef="_24e548fe-b5ef-4250-9ec6-4d1d52c0b54e" />
+    <semantic:endEvent id="_7cfa0430-aa42-4a1a-889c-48819706457f" name="Emergency occurred">
+      <semantic:incoming>_2226da71-da25-4556-b5d3-0f486238a8bd</semantic:incoming>
+      <semantic:errorEventDefinition id="_7c5eb9a9-4b55-484a-9747-67a83cd44c5a" errorRef="Error_09reou1" />
+    </semantic:endEvent>
+    <semantic:intermediateThrowEvent id="Event_0wf2b82" name="Not normal blood pressure verified">
+      <semantic:incoming>_47d13361-ce2e-45f6-a269-16b63d21631e</semantic:incoming>
+      <semantic:outgoing>Flow_1hbjeq9</semantic:outgoing>
+      <semantic:messageEventDefinition id="MessageEventDefinition_0g10rez" camunda:type="external" camunda:topic="NotNormalBloodPressureVerified" />
+    </semantic:intermediateThrowEvent>
+  </semantic:process>
+  <semantic:message id="Message_15g6c1p" name="Message_VerifyBloodPressure" />
+  <semantic:error id="Error_09reou1" name="Error_Emergency" errorCode="Error_Emergency" />
+  <semantic:category id="Category_10on8zl">
+    <semantic:categoryValue id="CategoryValue_0zgyprk" value="Sensitive data use" />
+  </semantic:category>
+  <semantic:category id="Category_13xxrut">
+    <semantic:categoryValue id="CategoryValue_13qgnon" value="Sensitive data use" />
+  </semantic:category>
+  <bpmndi:BPMNDiagram id="_1559cfe8-92e8-44bd-9b00-a1a96c725175" name="Page 1">
+    <bpmndi:BPMNPlane id="_1559cfe8-92e8-44bd-9b00-a1a96c725175_plane" bpmnElement="Collaboration_0az3hz8dd" trisobpmn:diagramWidth="1485" trisobpmn:diagramHeight="1050">
+      <bpmndi:BPMNShape id="_f6c11d13-8397-483a-8584-327c691db3c2" bpmnElement="Participant_1fjwk51de" isHorizontal="true" color:background-color="#ffffff" color:border-color="#000000">
+        <dc:Bounds x="157" y="80" width="1013" height="356" />
+        <bpmndi:BPMNLabel labelStyle="LS_1559cfe8-92e8-44bd-9b00-a1a96c725175_0" color:color="#000000" triso:defaultBounds="true">
+          <dc:Bounds x="422" y="83" width="12" height="350" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1hbjeq9_di" bpmnElement="Flow_1hbjeq9">
+        <di:waypoint x="591" y="353" />
+        <di:waypoint x="609" y="352.5" />
+        <di:waypoint x="609" y="353" />
+        <di:waypoint x="626" y="353" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="_9eb542ee-c7b3-4b5b-8599-bb0c32d1d29e" bpmnElement="_47d13361-ce2e-45f6-a269-16b63d21631e" bioc:stroke="#000" bioc:fill="#fff" color:border-color="#000000">
+        <di:waypoint x="573" y="221" />
+        <di:waypoint x="573" y="278" />
+        <di:waypoint x="572.7132034301758" y="278" />
+        <di:waypoint x="573" y="335" />
+        <bpmndi:BPMNLabel labelStyle="LS_1559cfe8-92e8-44bd-9b00-a1a96c725175_0" color:color="#000000" triso:labelPosition="custom">
+          <dc:Bounds x="488" y="238" width="84" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="_e8b62b44-6d85-4ea4-9852-1effe22e7602" bpmnElement="_68b77c40-8247-4f3f-8769-74f6ee6c3570" color:border-color="#000000">
+        <di:waypoint x="720.7867965698242" y="352.5" />
+        <di:waypoint x="763.8603897094727" y="352.5" />
+        <bpmndi:BPMNLabel labelStyle="LS_1559cfe8-92e8-44bd-9b00-a1a96c725175_0" color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="_1c95ee5b-3086-41ef-abf6-f9286ffe2eb9" bpmnElement="_fe31be84-18e9-407b-bd26-9b4f817a8bc2" color:border-color="#000000">
+        <di:waypoint x="858.8603897094727" y="352.5" />
+        <di:waypoint x="900.8603897094727" y="352.5" />
+        <bpmndi:BPMNLabel labelStyle="LS_1559cfe8-92e8-44bd-9b00-a1a96c725175_0" color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="_262d1b19-b30f-4037-b4b9-e151d72c82d7" bpmnElement="_2226da71-da25-4556-b5d3-0f486238a8bd" color:border-color="#000000">
+        <di:waypoint x="437" y="258" />
+        <di:waypoint x="437" y="335" />
+        <bpmndi:BPMNLabel labelStyle="LS_1559cfe8-92e8-44bd-9b00-a1a96c725175_0" color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="_43e9ab3c-239e-4964-807f-d82fbf189b1b" bpmnElement="_42fadf2e-b2a0-4db3-931f-cdb081f2e247" color:border-color="#000000">
+        <di:waypoint x="995.8603897094727" y="352.5" />
+        <di:waypoint x="1032.0735931396484" y="352.5" />
+        <bpmndi:BPMNLabel labelStyle="LS_1559cfe8-92e8-44bd-9b00-a1a96c725175_0" color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="_4fd6a61d-ee76-49f6-88a6-754c5cc0fe52" bpmnElement="_3990b3b9-6f30-4382-9cf8-1a86a161a9af" bioc:stroke="#000" bioc:fill="#fff" color:border-color="#000000">
+        <di:waypoint x="594" y="201" />
+        <di:waypoint x="650" y="201" />
+        <bpmndi:BPMNLabel labelStyle="LS_1559cfe8-92e8-44bd-9b00-a1a96c725175_0" color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom">
+          <dc:Bounds x="598" y="206" width="48" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="_8ec89fa3-48e7-4069-bdbd-7b2a97c8d46a" bpmnElement="_995b0c98-59b6-4865-8818-733da5cf6f83" color:border-color="#000000">
+        <di:waypoint x="471" y="201" />
+        <di:waypoint x="552" y="201" />
+        <bpmndi:BPMNLabel labelStyle="LS_1559cfe8-92e8-44bd-9b00-a1a96c725175_0" color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="_57a01d42-ea2c-4cd0-b899-dcfc6db45a54" bpmnElement="_d5969648-feac-445c-b936-cf063cfd7cd4" color:border-color="#000000">
+        <di:waypoint x="296.7132034301758" y="201" />
+        <di:waypoint x="374.7132034301758" y="201" />
+        <bpmndi:BPMNLabel labelStyle="LS_1559cfe8-92e8-44bd-9b00-a1a96c725175_0" color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_74849bc7-bf3b-4808-834b-cbde16019566" bpmnElement="_56a14f29-5559-4165-b7a7-17b549ac8773" isExpanded="true" color:background-color="#ffffff" color:border-color="#000000">
+        <dc:Bounds x="763" y="129" width="377" height="144" />
+        <bpmndi:BPMNLabel labelStyle="LS_1559cfe8-92e8-44bd-9b00-a1a96c725175_0" color:color="#000000" triso:defaultBounds="true">
+          <dc:Bounds x="1031.0735931396484" y="139" width="323" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0xg5iuy_di" bpmnElement="Flow_0xg5iuy">
+        <di:waypoint x="898" y="201" />
+        <di:waypoint x="931" y="201" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="_124749cb-aa4d-4d97-96e7-95b33621d467" bpmnElement="_4b776b48-3d03-48b5-88d4-4a76a7d51560" color:border-color="#000000">
+        <di:waypoint x="1027" y="201" />
+        <di:waypoint x="1062" y="201" />
+        <bpmndi:BPMNLabel labelStyle="LS_1559cfe8-92e8-44bd-9b00-a1a96c725175_0" color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="_5c9a6e54-1d04-4cc6-afd0-680eea4344dd" bpmnElement="_fad67562-013c-4656-9c7b-10d70919d49e" color:border-color="#000000">
+        <di:waypoint x="827" y="201" />
+        <di:waypoint x="862" y="201" />
+        <bpmndi:BPMNLabel labelStyle="LS_1559cfe8-92e8-44bd-9b00-a1a96c725175_0" color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_97d4fd21-13b4-4106-83d4-f91fd873885c" bpmnElement="_f24d5e15-5d3e-4aa1-87df-0af886f9d251" color:background-color="#ffffff" color:border-color="#000000">
+        <dc:Bounds x="931" y="163" width="96" height="76" />
+        <bpmndi:BPMNLabel labelStyle="LS_1559cfe8-92e8-44bd-9b00-a1a96c725175_0" color:color="#000000" triso:defaultBounds="true">
+          <dc:Bounds x="1144.5735931396484" y="195" width="89" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_46b49349-b434-4195-9ed0-50a0d4124b1b" bpmnElement="_63ff6d79-fea6-4021-a9ba-7ec3301c0adf" bioc:stroke="#000" bioc:fill="#fff" color:background-color="#ffffff" color:border-color="#000000">
+        <dc:Bounds x="795" y="185" width="32" height="32" />
+        <bpmndi:BPMNLabel labelStyle="LS_1559cfe8-92e8-44bd-9b00-a1a96c725175_0" color:color="#000000" triso:defaultBounds="true">
+          <dc:Bounds x="783" y="227" width="57" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0qjau8e_di" bpmnElement="Event_0m5ef89">
+        <dc:Bounds x="862" y="183" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="839" y="226" width="82" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_06vrgzn_di" bpmnElement="_4e5ed499-783a-4ab8-b98e-28044ade9fb7" bioc:stroke="#000" bioc:fill="#fff">
+        <dc:Bounds x="1062" y="183" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1052" y="229" width="57" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_7911a885-ab7e-4fdd-a511-b9b7f1600ca8" bpmnElement="_8804b67b-051b-44f3-9146-f9ae58b2c64f" color:background-color="#ffffff" color:border-color="#000000">
+        <dc:Bounds x="375" y="163" width="96" height="76" />
+        <bpmndi:BPMNLabel labelStyle="LS_1559cfe8-92e8-44bd-9b00-a1a96c725175_0" color:color="#000000" triso:defaultBounds="true">
+          <dc:Bounds x="638.2132034301758" y="188" width="89" height="26" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_327b92b8-925f-4387-b177-4fe948b4b765" bpmnElement="_e7df93e4-628f-46b0-a15c-618201d96a08" isMarkerVisible="true" bioc:stroke="#000" bioc:fill="#fff" color:background-color="#ffffff" color:border-color="#000000">
+        <dc:Bounds x="552" y="181" width="42" height="40" />
+        <bpmndi:BPMNLabel labelStyle="LS_1559cfe8-92e8-44bd-9b00-a1a96c725175_0" color:color="#000000">
+          <dc:Bounds x="536" y="149" width="74" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_70363fbd-af9e-458d-a95e-d21be3f1bf6a" bpmnElement="_f95f5872-b6bf-42af-be16-2e8e3f898bad" bioc:stroke="#000" bioc:fill="#fff" color:background-color="#ffffff" color:border-color="#000000">
+        <dc:Bounds x="266" y="185" width="32" height="32" />
+        <bpmndi:BPMNLabel labelStyle="LS_1559cfe8-92e8-44bd-9b00-a1a96c725175_0" color:color="#000000">
+          <dc:Bounds x="244" y="140" width="79" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_8924d08b-12ea-498e-b36e-8173fbd3780b" bpmnElement="_24e548fe-b5ef-4250-9ec6-4d1d52c0b54e" color:background-color="#ffffff" color:border-color="#000000">
+        <dc:Bounds x="626" y="315" width="96" height="76" />
+        <bpmndi:BPMNLabel labelStyle="LS_1559cfe8-92e8-44bd-9b00-a1a96c725175_0" color:color="#000000" triso:defaultBounds="true">
+          <dc:Bounds x="889.2867965698242" y="339.5" width="89" height="26" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_51f28426-b7d8-4efe-b184-daa808ac7020" bpmnElement="_0084fae0-4385-4057-b1b4-9bf5bbb67e38" color:background-color="#ffffff" color:border-color="#000000">
+        <dc:Bounds x="764" y="315" width="96" height="76" />
+        <bpmndi:BPMNLabel labelStyle="LS_1559cfe8-92e8-44bd-9b00-a1a96c725175_0" color:color="#000000" triso:defaultBounds="true">
+          <dc:Bounds x="1027.3603897094727" y="339.5" width="89" height="26" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_de13cd5c-f49f-4af3-a7d4-ad3a8006acfc" bpmnElement="_91b94bf7-0597-4a79-aaa3-94914db0b483" color:background-color="#ffffff" color:border-color="#000000">
+        <dc:Bounds x="901" y="315" width="96" height="76" />
+        <bpmndi:BPMNLabel labelStyle="LS_1559cfe8-92e8-44bd-9b00-a1a96c725175_0" color:color="#000000" triso:defaultBounds="true">
+          <dc:Bounds x="1164.3603897094727" y="346.5" width="89" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_e2f1e7fd-a8e8-4e23-a96b-6727cf9ba299" bpmnElement="_b8cae137-9d37-4367-a68a-3012c5849142" bioc:stroke="#000" bioc:fill="#fff" color:background-color="#ffffff" color:border-color="#000000">
+        <dc:Bounds x="1032" y="335" width="36" height="36" />
+        <bpmndi:BPMNLabel labelStyle="LS_1559cfe8-92e8-44bd-9b00-a1a96c725175_0" color:color="#000000" triso:defaultBounds="true">
+          <dc:Bounds x="1011" y="381" width="79" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0ms5dld_di" bpmnElement="_6d3756f1-b696-4c04-8ad1-fcc2e6acf327" bioc:stroke="#000" bioc:fill="#fff">
+        <dc:Bounds x="650" y="183" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="628" y="141" width="83" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_78c566d1-2cc7-4dbf-b670-57ee443d750b" bpmnElement="_7cfa0430-aa42-4a1a-889c-48819706457f" bioc:stroke="#000" bioc:fill="#fff" color:background-color="#ffffff" color:border-color="#000000">
+        <dc:Bounds x="419" y="335" width="36" height="36" />
+        <bpmndi:BPMNLabel labelStyle="LS_1559cfe8-92e8-44bd-9b00-a1a96c725175_0" color:color="#000000" triso:defaultBounds="true">
+          <dc:Bounds x="409" y="381" width="57" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1qmbmk2_di" bpmnElement="Event_0wf2b82">
+        <dc:Bounds x="555" y="335" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="531" y="378" width="84" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_80a60727-d311-4fba-a1e2-b427f829faad" bpmnElement="_7b2daf87-e8c0-4811-a472-c9710a07cd10" bioc:stroke="#000" bioc:fill="#fff" color:background-color="#ffffff" color:border-color="#000000">
+        <dc:Bounds x="419" y="222" width="36" height="36" />
+        <bpmndi:BPMNLabel labelStyle="LS_1559cfe8-92e8-44bd-9b00-a1a96c725175_0" color:color="#000000">
+          <dc:Bounds x="349" y="245" width="68" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_71ff7512-aa3a-4dc2-b0d6-8e5557b86af6" bpmnElement="_da10c6ad-e284-4b91-b4a2-ccf7a42e42d8" color:background-color="#ffffff" color:border-color="#000000">
+        <dc:Bounds x="219" y="125" width="527" height="153" />
+        <bpmndi:BPMNLabel labelStyle="LS_1559cfe8-92e8-44bd-9b00-a1a96c725175_0" color:color="#000000" triso:defaultBounds="true">
+          <dc:Bounds x="438" y="132" width="90" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_544a6b9c-eefa-4eea-a610-e233b877c8f2" bpmnElement="_277a8b45-0ab6-43e6-a93a-5bb437674cf3" color:background-color="#ffffff" color:border-color="#000000">
+        <dc:Bounds x="520" y="290" width="356" height="118" />
+        <bpmndi:BPMNLabel labelStyle="LS_1559cfe8-92e8-44bd-9b00-a1a96c725175_0" color:color="#000000" triso:defaultBounds="true">
+          <dc:Bounds x="654" y="297" width="90" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+    <bpmndi:BPMNLabelStyle id="LS_1559cfe8-92e8-44bd-9b00-a1a96c725175_0">
+      <dc:Font name="arial,helvetica,sans-serif" size="11" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" />
+    </bpmndi:BPMNLabelStyle>
+  </bpmndi:BPMNDiagram>
+</semantic:definitions>

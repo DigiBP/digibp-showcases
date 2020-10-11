@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<semantic:definitions xmlns:semantic="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/dmn" xmlns:triso="http://www.trisotech.com/2015/triso/modeling" xmlns:trisodmn="http://www.trisotech.com/2016/triso/dmn" xmlns:feel="https://www.omg.org/spec/DMN/20191111/FEEL/" xmlns:tc="http://www.omg.org/spec/DMN/20160719/testcase" xmlns:drools="http://www.drools.org/kie/dmn/1.1" xmlns:rss="http://purl.org/rss/2.0/" xmlns:openapi="https://openapis.org/omg/extension/1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:boxedext="https://www.trisotech.com/spec/DMN/20191111/EXT/" xmlns="http://www.trisotech.com/definitions/_be7591ab-a6ac-444f-bd36-f8e7d17acde9" id="_be7591ab-a6ac-444f-bd36-f8e7d17acde9" name="Blood Pressure Category" namespace="http://www.trisotech.com/definitions/_be7591ab-a6ac-444f-bd36-f8e7d17acde9" exporter="Camunda Modeler" exporterVersion="4.2.0" triso:logoChoice="None">
+  <semantic:extensionElements />
+  <semantic:decisionService id="_be7591ab-a6ac-444f-bd36-f8e7d17acde9_DS" name="Whole Model Decision Service" triso:dynamicDecisionService="true" triso:wholeModelService="true">
+    <semantic:variable id="_be7591ab-a6ac-444f-bd36-f8e7d17acde9_DS_VAR" name="Whole Model Decision Service" typeRef="Any" />
+    <semantic:outputDecision href="#_9215eecf-c019-446f-b586-5e3c253b258f" />
+    <semantic:inputData href="#inputData__3b11bd38-5974-4de0-a453-1925ac28f2b6" />
+    <semantic:inputData href="#inputData__f31b8762-3077-4c51-970c-9ea8236f422c" />
+  </semantic:decisionService>
+  <semantic:decisionService id="_f2732483-2ec1-4c99-933e-6b50c1ab3f02_DS" name="Diagram Blood Pressure Category" triso:dynamicDecisionService="true">
+    <semantic:variable id="_f2732483-2ec1-4c99-933e-6b50c1ab3f02_DS_VAR" name="Diagram Blood Pressure Category" typeRef="Any" />
+    <semantic:outputDecision href="#_9215eecf-c019-446f-b586-5e3c253b258f" />
+    <semantic:inputData href="#inputData__3b11bd38-5974-4de0-a453-1925ac28f2b6" />
+    <semantic:inputData href="#inputData__f31b8762-3077-4c51-970c-9ea8236f422c" />
+  </semantic:decisionService>
+  <semantic:decision id="BloodPressureCategory" name="Blood Pressure Category">
+    <semantic:variable id="_8fa894e9-6176-4522-acc7-feddcad755ee" name="Blood Pressure Category" typeRef="string" />
+    <semantic:informationRequirement id="inputData__3b11bd38-5974-4de0-a453-1925ac28f2b6__9215eecf-c019-446f-b586-5e3c253b258f">
+      <semantic:requiredInput href="#inputData__3b11bd38-5974-4de0-a453-1925ac28f2b6" />
+    </semantic:informationRequirement>
+    <semantic:informationRequirement id="inputData__f31b8762-3077-4c51-970c-9ea8236f422c__9215eecf-c019-446f-b586-5e3c253b258f">
+      <semantic:requiredInput href="#inputData__f31b8762-3077-4c51-970c-9ea8236f422c" />
+    </semantic:informationRequirement>
+    <semantic:decisionTable id="_560fc333-d8c4-47d1-9e79-5a468c54f67c" typeRef="string" hitPolicy="FIRST" outputLabel="Blood Pressure Category" triso:expressionId="_eb8a0f06-7a8a-4fc3-bb2a-856d9fc9d404">
+      <semantic:input id="_3b11bd38-5974-4de0-a453-1925ac28f2b6" label="Systolic" camunda:inputVariable="systolic" triso:allowNull="true">
+        <semantic:inputExpression typeRef="number">
+          <semantic:text></semantic:text>
+        </semantic:inputExpression>
+      </semantic:input>
+      <semantic:input id="_f31b8762-3077-4c51-970c-9ea8236f422c" label="Diastolic" camunda:inputVariable="diastolic" triso:allowNull="true">
+        <semantic:inputExpression typeRef="number">
+          <semantic:text></semantic:text>
+        </semantic:inputExpression>
+      </semantic:input>
+      <semantic:output id="_69629c91-15f0-48f4-8dcc-c4ecddad6151" label="Category" name="category" typeRef="string" triso:allowNull="true">
+        <semantic:outputValues id="UnaryTests_010bu3u">
+          <semantic:text>"Hypotension","Normal","Elevated","Hypertension Stage 1","Hypertension Stage 2","Hypertensive Crisis"</semantic:text>
+        </semantic:outputValues>
+      </semantic:output>
+      <semantic:annotation name="Description" />
+      <semantic:rule id="_3e9f9998-c6e4-41cf-9fab-cda7ac7fb441">
+        <semantic:description>Consult Your Doctor Immediately</semantic:description>
+        <semantic:inputEntry id="_89fcda67-39f8-4c95-ad28-7543e8a626b2">
+          <semantic:text>&gt;180</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_9d89fce0-2a9a-4612-8f5c-01e19b702ad6">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_d3fa101e-b74d-4fc1-8542-b0d71db24131">
+          <semantic:text>"Hypertensive Crisis"</semantic:text>
+        </semantic:outputEntry>
+        <semantic:annotationEntry>
+          <semantic:text>Consult Your Doctor Immediately</semantic:text>
+        </semantic:annotationEntry>
+      </semantic:rule>
+      <semantic:rule id="_d136cf01-74ef-4ffc-9c4c-28f3dfdf2077">
+        <semantic:description>Consult Your Doctor Immediately</semantic:description>
+        <semantic:inputEntry id="_a4088f54-aba4-45d8-ad4f-e8cbdef44f6b">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_40bbbc6c-6460-41f9-b90c-6b3656f8f016">
+          <semantic:text>&gt;120</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_1ab38358-af02-4cd5-83cd-961227d6049b">
+          <semantic:text>"Hypertensive Crisis"</semantic:text>
+        </semantic:outputEntry>
+        <semantic:annotationEntry>
+          <semantic:text>Consult Your Doctor Immediately</semantic:text>
+        </semantic:annotationEntry>
+      </semantic:rule>
+      <semantic:rule id="_659db932-10d0-4965-bffa-1b4fbc40d702">
+        <semantic:description>High Blood Pressure</semantic:description>
+        <semantic:inputEntry id="_5e0b5e55-ca26-4b85-bf3c-f09c7bfbd463">
+          <semantic:text>[140..180]</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_61f75f02-317e-43a5-b02f-04002d9c1324">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_a142cd4d-3ceb-4c41-889f-894bbd3ea39e">
+          <semantic:text>"Hypertension Stage 2"</semantic:text>
+        </semantic:outputEntry>
+        <semantic:annotationEntry>
+          <semantic:text>High Blood Pressure</semantic:text>
+        </semantic:annotationEntry>
+      </semantic:rule>
+      <semantic:rule id="_766258dc-5a37-44b7-bb76-9075d8ac622d">
+        <semantic:description>High Blood Pressure</semantic:description>
+        <semantic:inputEntry id="_3f9eacdf-ac03-4064-a751-640bb9e18c33">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_96c5e607-5cae-44e5-ba5d-0225dd73c371">
+          <semantic:text>[90..120]</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_23a2dd16-575a-48a2-bb2a-0d289a55ef3b">
+          <semantic:text>"Hypertension Stage 2"</semantic:text>
+        </semantic:outputEntry>
+        <semantic:annotationEntry>
+          <semantic:text>High Blood Pressure</semantic:text>
+        </semantic:annotationEntry>
+      </semantic:rule>
+      <semantic:rule id="_3e29f3ad-8d97-49b6-86db-964d9bb75059">
+        <semantic:description>High Blood Pressure</semantic:description>
+        <semantic:inputEntry id="_5b4f017f-e954-4ca4-b8b7-2cb3adc5511d">
+          <semantic:text>[130..139]</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_eefd23cb-48de-4219-93db-0d0c321c5ca2">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_7cc73060-e189-443c-b235-9e713270bbc3">
+          <semantic:text>"Hypertension Stage 1"</semantic:text>
+        </semantic:outputEntry>
+        <semantic:annotationEntry>
+          <semantic:text>High Blood Pressure</semantic:text>
+        </semantic:annotationEntry>
+      </semantic:rule>
+      <semantic:rule id="_a520263d-eba2-4abc-ad07-bb67dfd17b88">
+        <semantic:description>High Blood Pressure</semantic:description>
+        <semantic:inputEntry id="_c3ebf157-8b6b-478f-87da-9bd9decefeae">
+          <semantic:text>-</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_8af970bb-e123-4335-924e-f7806df3ddfc">
+          <semantic:text>[80..89]</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_8b964c0e-14e3-4657-88cc-2b6ac05ac62a">
+          <semantic:text>"Hypertension Stage 1"</semantic:text>
+        </semantic:outputEntry>
+        <semantic:annotationEntry>
+          <semantic:text>High Blood Pressure</semantic:text>
+        </semantic:annotationEntry>
+      </semantic:rule>
+      <semantic:rule id="_446882f5-bac2-40bd-9688-343878aec4e1">
+        <semantic:inputEntry id="_e99a9998-c597-454e-831f-c2721c3373a9">
+          <semantic:text>[120..129]</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_24f994ff-b354-4942-ae73-53601b722206">
+          <semantic:text>&lt;80</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_a13878d2-4957-4e9e-a485-5e1e0946b368">
+          <semantic:text>"Elevated"</semantic:text>
+        </semantic:outputEntry>
+        <semantic:annotationEntry>
+          <semantic:text></semantic:text>
+        </semantic:annotationEntry>
+      </semantic:rule>
+      <semantic:rule id="_a0d90ab9-398e-4c04-84ea-85d5da0b0879">
+        <semantic:description>male: systolic 110</semantic:description>
+        <semantic:inputEntry id="_e7f06a51-4e3f-4037-85dd-bcd8a835c0af">
+          <semantic:text>&lt;100</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_41f8fa43-d0d2-43e7-92fb-e570577ac929">
+          <semantic:text>&lt;60</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_6483d629-1193-40a4-b8fc-6baaf54ef2b6">
+          <semantic:text>"Hypotension"</semantic:text>
+        </semantic:outputEntry>
+        <semantic:annotationEntry>
+          <semantic:text>male: systolic 110</semantic:text>
+        </semantic:annotationEntry>
+      </semantic:rule>
+      <semantic:rule id="_43bb2a9d-2bf8-42bc-8dee-2aa51275301f">
+        <semantic:inputEntry id="_99ff2983-9edb-4d16-95c6-aefced382686">
+          <semantic:text>&lt;120</semantic:text>
+        </semantic:inputEntry>
+        <semantic:inputEntry id="_500c5806-d4fa-4b1a-8b3b-5e23395d1d6f">
+          <semantic:text>&lt;80</semantic:text>
+        </semantic:inputEntry>
+        <semantic:outputEntry id="_ec245dc7-b62e-4381-a9e0-3854c3c2774c">
+          <semantic:text>"Normal"</semantic:text>
+        </semantic:outputEntry>
+        <semantic:annotationEntry>
+          <semantic:text></semantic:text>
+        </semantic:annotationEntry>
+      </semantic:rule>
+    </semantic:decisionTable>
+  </semantic:decision>
+  <semantic:inputData id="inputData__3b11bd38-5974-4de0-a453-1925ac28f2b6" name="Systolic">
+    <semantic:variable id="_4b3dfa4a-879d-4b56-a8ac-d8030cdff15e" name="Systolic" typeRef="number" />
+  </semantic:inputData>
+  <semantic:inputData id="inputData__f31b8762-3077-4c51-970c-9ea8236f422c" name="Diastolic">
+    <semantic:variable id="_7213c19b-7497-444e-bfd0-69fb197875c3" name="Diastolic" typeRef="number" />
+  </semantic:inputData>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="_f2732483-2ec1-4c99-933e-6b50c1ab3f02" name="Blood Pressure Category" triso:modelElementRef="_f00c5eea-a304-41ef-9375-51fb48ddbe57">
+      <dmndi:Size width="1485" height="1050" />
+      <dmndi:DMNShape id="_edbfc81f-938e-4c08-9cfb-b1a4bd6c9aa5" dmnElementRef="BloodPressureCategory">
+        <dc:Bounds height="60" width="153" x="153" y="80" />
+        <dmndi:DMNLabel trisodmn:defaultBounds="true" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+    <dmndi:DMNStyle id="LS_be7591ab-a6ac-444f-bd36-f8e7d17acde9_0" fontSize="11" fontFamily="arial,helvetica,sans-serif" fontItalic="false" fontBold="false" fontUnderline="false" fontStrikeThrough="false" />
+  </dmndi:DMNDI>
+</semantic:definitions>

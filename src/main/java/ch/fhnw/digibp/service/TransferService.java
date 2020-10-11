@@ -41,6 +41,12 @@ public class TransferService {
         return object;
     }
 
+    public Object peek(String traceId, String topic) {
+        TransferKey transferKey = new TransferKey(traceId, topic);
+        createQueueIfNotExists(transferKey);
+        return transferQueues.get(transferKey).peek();
+    }
+
     public Object poll(String traceId, String topic, long seconds) throws InterruptedException {
         TransferKey transferKey = new TransferKey(traceId, topic);
         createQueueIfNotExists(transferKey);

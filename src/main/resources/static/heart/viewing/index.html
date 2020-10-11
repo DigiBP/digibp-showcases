@@ -1,0 +1,120 @@
+<!--
+  ~ Copyright (c) 2020. University of Applied Sciences and Arts Northwestern Switzerland FHNW.
+  ~ All rights reserved.
+  -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="https://api.pryv.com/style/pryv.min.css">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400">
+  <title>Heart Service - View and Share Data</title>
+</head>
+<script src="https://api.pryv.com/lib-js/pryv.js"></script>
+<script src="../script.js"></script>
+<script src="script.js"></script>
+
+<body>
+  <div class="container">
+    <h1>Heart Service - View and Share Data</h1>
+    <div class="card">
+      <div class="card-body">
+        <h2 class="card-title">Welcome</h2>
+        <span id="pryv-button"></span>
+        <br><br>
+        <span id="welcome-message-mme">
+          Here you can visualize the data you entered and share it with third parties.
+        </span>
+        <br>
+        <span id="please-login">
+          Please login.
+        </span>
+      </div>
+    </div>
+    <div class="card" id="data-view" style="visibility: hidden;">
+      <div class="card-body">
+        <h2 class="card-title">Data</h2>
+        <table id='blood-pressure-table' class="table">
+          <thead>
+            <tr>
+              <th colspan="3"><b>Blood pressure</b></td>
+            </tr>
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Systolic</th>
+              <th scope="col">Diastolic</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card" id="analysis" style="visibility: hidden;">
+      <div class="card-body">
+        <h2 class="card-title">Analysis</h2>
+        <span id="analysis-note" style="visibility: hidden;"></span>
+      </div>
+    </div>
+    <div class="card" id="diagnosis-view" style="visibility: hidden;">
+      <div class="card-body">
+        <h2 class="card-title">Diagnosis</h2>
+        <table id='diagnosis-table' class="table">
+          <thead>
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Diagnosis</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card" id="sharing-view" style="visibility: hidden;">
+      <div class="card-body">
+        <h2 class="card-title">Sharings</h2>
+        <form class="form-inline">
+
+          <button type="button" id="create-sharing" class="btn btn-primary btn-sm">Create</button>
+          &nbsp;
+          <input type="text" id="sharing-name" placeholder="name of the sharing">
+          &nbsp;
+          <input class="form-check-input" type="checkbox" id="check-blood-pressure" value="blood-pressure" checked="checked">
+          <label class="form-check-label" for="check-blood-pressure">Blood pressure</label>
+          &nbsp;
+          <input class="form-check-input" type="checkbox" id="check-analysis" value="analysis" checked="checked">
+          <label class="form-check-label" for="analysis">Analysis</label>
+          &nbsp;
+          <input class="form-check-input" type="checkbox" id="check-diagnosis" value="diagnosis" checked="checked">
+          <label class="form-check-label" for="diagnosis">Diagnosis</label>
+
+        </form>
+        <table id='sharings-table' class="table">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Scope</th>
+              <th scope="col">Link</th>
+              <th scope="col">Mail</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+        <small id='sharing-delete-message'>Click on the name of a sharing to delete it.</small>
+      </div>
+    </div>
+    <div class="continue">
+      Continue: <a href="../recording/">Record your data.</a>
+    </div>
+  </div>
+</body>
+
+</html>
