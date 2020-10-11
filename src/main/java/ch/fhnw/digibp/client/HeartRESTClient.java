@@ -13,17 +13,17 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class HeartRESTClient {
-    @Value("${pryv.token-endpoint}")
+    @Value("${pryv.token-endpoint-vault}")
     String pryvTokenEndpointVault;
 
-    @Value("${camunda-rest.tenantid}")
+    @Value("${camunda-rest.tenant-id}")
     String camundaTenantId;
 
     @Value("${camunda-rest.url}")
     String camundaRestUrl;
 
-    public String getPryvTokenEndpointUser(String streamIdUserId){
-        return Unirest.get(PryvUtil.getEndpoint(pryvTokenEndpointVault) + "events?streams="+streamIdUserId+"&limit=1")
+    public String getpryvTokenEndpointPatient(String vaultStreamIdTokenEndpointPatient){
+        return Unirest.get(PryvUtil.getEndpoint(pryvTokenEndpointVault) + "events?streams="+vaultStreamIdTokenEndpointPatient+"&limit=1")
                 .header("Authorization", PryvUtil.getToken(pryvTokenEndpointVault))
                 .asJson()
                 .getBody()
@@ -94,9 +94,9 @@ public class HeartRESTClient {
                 .asString();
     }
 
-    public JSONObject getBloodPressureEvent(String pryvTokenEndpointUser, String modifiedSince){
-        return Unirest.get(PryvUtil.getEndpoint(pryvTokenEndpointUser) + "events?streams=blood-pressure&limit=1&modifiedSince="+modifiedSince+"")
-                .header("Authorization", PryvUtil.getToken(pryvTokenEndpointUser))
+    public JSONObject getBloodPressureEvent(String pryvTokenEndpointPatient, String modifiedSince){
+        return Unirest.get(PryvUtil.getEndpoint(pryvTokenEndpointPatient) + "events?streams=blood-pressure&limit=1&modifiedSince="+modifiedSince+"")
+                .header("Authorization", PryvUtil.getToken(pryvTokenEndpointPatient))
                 .asJson()
                 .getBody()
                 .getObject();
@@ -140,10 +140,24 @@ public class HeartRESTClient {
                 .asString();
     }
 
-    public String getPatientEmail(String pryvTokenEndpointUser){
+    public String getPatientEmail(String pryvTokenEndpointPatient){
         String email = "";
-        JSONObject jsonObject = Unirest.get(PryvUtil.getEndpoint(pryvTokenEndpointUser) + "events?streams=contact-email&limit=1")
-                .header("Authorization", PryvUtil.getToken(pryvTokenEndpointUser))
+        JSONObject jsonObject = Unirest.get(PryvUtil.getEndpoint(pryvTokenEndpointPatient) + "events?streams=contact-email&limit=1")
+                .header("Authorization", PryvUtil.getToken(pryvTokenEndpointPatient))
+                .asJson()
+                .getBody()
+                .getObject();
+
+        if(!jsonObject.getJSONArray("events").isEmpty()) {
+            email = jsonObject.getJSONArray("events").getJSONObject(0).getString("content");
+        }
+        return email;
+    }
+
+    public String getPatientName(String pryvTokenEndpointPatient){
+        String email = "";
+        JSONObject jsonObject = Unirest.get(PryvUtil.getEndpoint(pryvTokenEndpointPatient) + "events?streams=contact-name&limit=1")
+                .header("Authorization", PryvUtil.getToken(pryvTokenEndpointPatient))
                 .asJson()
                 .getBody()
                 .getObject();

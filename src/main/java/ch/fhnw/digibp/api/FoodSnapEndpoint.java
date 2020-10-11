@@ -27,7 +27,7 @@ public class FoodSnapEndpoint {
     @Autowired
     RestTemplateBuilder restTemplateBuilder;
 
-    @Value("${camunda-rest.tenantid}")
+    @Value("${camunda-rest.tenant-id}")
     String camundaTenantId;
 
     @Value("${camunda-rest.url}")

@@ -24,19 +24,19 @@ public class HeartService {
 
     static Map<String, String> lastModifiedEvent = new HashMap<>();
 
-    public void processBloodPressureEvent(String streamIdUserId) throws InterruptedException {
-        String modifiedSince = lastModifiedEvent.get(streamIdUserId);
+    public void processBloodPressureEvent(String vaultStreamIdTokenEndpointPatient) throws InterruptedException {
+        String modifiedSince = lastModifiedEvent.get(vaultStreamIdTokenEndpointPatient);
         if(modifiedSince==null)
             modifiedSince = "";
 
-        JSONObject jsonObject = heartRESTClient.getBloodPressureEvent(heartRESTClient.getPryvTokenEndpointUser(streamIdUserId), modifiedSince);
+        JSONObject jsonObject = heartRESTClient.getBloodPressureEvent(heartRESTClient.getpryvTokenEndpointPatient(vaultStreamIdTokenEndpointPatient), modifiedSince);
 
         if(!jsonObject.getJSONArray("events").isEmpty()) {
             Integer systolic = jsonObject.getJSONArray("events").getJSONObject(0).getJSONObject("content").getInt("systolic");
             Integer diastolic = jsonObject.getJSONArray("events").getJSONObject(0).getJSONObject("content").getInt("diastolic");
-            lastModifiedEvent.put(streamIdUserId,jsonObject.getJSONArray("events").getJSONObject(0).getString("modified"));
+            lastModifiedEvent.put(vaultStreamIdTokenEndpointPatient,jsonObject.getJSONArray("events").getJSONObject(0).getString("modified"));
             String eventId = jsonObject.getJSONArray("events").getJSONObject(0).getString("id");
-            transferService.put(eventId, "streamIdUserId", streamIdUserId);
+            transferService.put(eventId, "vaultStreamIdTokenEndpointPatient", vaultStreamIdTokenEndpointPatient);
             heartRESTClient.initHeartService(eventId, systolic, diastolic);
         }
     }

@@ -26,13 +26,13 @@ public class HeartEndpoint {
     @Autowired
     TransferService transferService;
 
-    @Value("${camunda-rest.tenantid}")
+    @Value("${camunda-rest.tenant-id}")
     String camundaTenantId;
 
     @Value("${camunda-rest.url}")
     String camundaRestUrl;
 
-    @Value("${pryv.token-endpoint}")
+    @Value("${pryv.token-endpoint-vault}")
     String pryvTokenEndpointVault;
 
     @Autowired
@@ -53,11 +53,11 @@ public class HeartEndpoint {
         return Boolean.TRUE;
     }
 
-    @PostMapping(path = "/webhook/{streamIdUserId}", consumes = "application/json", produces = "application/json")
+    @PostMapping(path = "/webhook/{vaultStreamIdTokenEndpointPatient}", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public PryvWebhookRequest postPryvWebhook(HttpServletRequest httpServletRequest, @RequestBody PryvWebhookRequest request, @PathVariable("streamIdUserId") String streamIdUserId) throws InterruptedException {
+    public PryvWebhookRequest postPryvWebhook(HttpServletRequest httpServletRequest, @RequestBody PryvWebhookRequest request, @PathVariable("vaultStreamIdTokenEndpointPatient") String vaultStreamIdTokenEndpointPatient) throws InterruptedException {
         heartConfig.setBaseURL(httpServletRequest);
-        heartService.processBloodPressureEvent(streamIdUserId);
+        heartService.processBloodPressureEvent(vaultStreamIdTokenEndpointPatient);
         return request;
     }
 
@@ -65,7 +65,8 @@ public class HeartEndpoint {
     @ResponseStatus(HttpStatus.CREATED)
     public void postEmail(@RequestBody EmailRequest request) throws InterruptedException {
         String email = request.email;
-        email = email; //todo
+        String name = request.name;
+        String out = name + ": " +email; //todo
     }
 
     public static class OnboardingRequest {
@@ -74,6 +75,7 @@ public class HeartEndpoint {
 
     public static class EmailRequest {
         public String email;
+        public String name;
     }
 
     public static class PryvWebhookRequest {

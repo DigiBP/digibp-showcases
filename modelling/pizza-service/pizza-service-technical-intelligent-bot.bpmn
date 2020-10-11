@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_14tmvr5" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.6.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_14tmvr5" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.7.3">
   <bpmn:collaboration id="Collaboration_1279bin">
     <bpmn:participant id="Participant_1ywa8fw" name="Food Service" processRef="Process_pizza-service-technical-intelligent" />
     <bpmn:participant id="Participant_1m1uurc" name="Customer" />
@@ -136,7 +136,7 @@
               <camunda:constraint name="readonly" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="suggestedScoring" label="Suggested Scoring" type="string" defaultValue="${scoring}">
+          <camunda:formField id="suggestedScoring" label="Suggested Scoring" type="string">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
@@ -391,7 +391,7 @@ response.pizzaSheetURL;</camunda:script>
             <camunda:value id="twint" name="TWINT" />
           </camunda:formField>
           <camunda:formField id="pizzaSheetURL" label="Pizza Sheet URL" type="string" />
-          <camunda:formField id="businessKey" label="Business Key" type="string" />
+          <camunda:formField id="businessKey" label="Business Key" type="string" defaultValue="${strongUuidGenerator.getNextId()}" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:outgoing>SequenceFlow_0076zmh</bpmn:outgoing>
@@ -405,6 +405,7 @@ response.pizzaSheetURL;</camunda:script>
           </camunda:inputParameter>
           <camunda:outputParameter name="scoring">${scoringResult.scoring}</camunda:outputParameter>
           <camunda:outputParameter name="explanation">${scoringResult.explanation}</camunda:outputParameter>
+          <camunda:outputParameter name="suggestedScoring">${scoringResult.scoring}</camunda:outputParameter>
         </camunda:inputOutput>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0076zmh</bpmn:incoming>
@@ -433,14 +434,11 @@ response.pizzaSheetURL;</camunda:script>
       <bpmndi:BPMNShape id="Participant_1ywa8fw_di" bpmnElement="Participant_1ywa8fw" isHorizontal="true">
         <dc:Bounds x="129" y="353" width="1269" height="491" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_145y685_di" bpmnElement="Lane_145y685" isHorizontal="true">
-        <dc:Bounds x="159" y="476" width="1239" height="368" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_04nou6f_di" bpmnElement="Lane_04nou6f" isHorizontal="true">
         <dc:Bounds x="159" y="353" width="1239" height="123" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_06fgaz2_di" bpmnElement="Lane_06fgaz2" isHorizontal="true" bioc:stroke="rgb(30, 136, 229)" bioc:fill="rgb(187, 222, 251)">
-        <dc:Bounds x="189" y="594" width="1209" height="128" />
+      <bpmndi:BPMNShape id="Lane_145y685_di" bpmnElement="Lane_145y685" isHorizontal="true">
+        <dc:Bounds x="159" y="476" width="1239" height="368" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_06f4on9_di" bpmnElement="Lane_06f4on9" isHorizontal="true">
         <dc:Bounds x="189" y="722" width="1209" height="122" />
@@ -448,51 +446,23 @@ response.pizzaSheetURL;</camunda:script>
       <bpmndi:BPMNShape id="Lane_1kmni4m_di" bpmnElement="Lane_1kmni4m" isHorizontal="true">
         <dc:Bounds x="189" y="476" width="1209" height="118" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Participant_0v90nw7_di" bpmnElement="Participant_1m1uurc" isHorizontal="true">
-        <dc:Bounds x="129" y="81" width="1269" height="60" />
+      <bpmndi:BPMNShape id="Lane_06fgaz2_di" bpmnElement="Lane_06fgaz2" isHorizontal="true" bioc:stroke="rgb(30, 136, 229)" bioc:fill="rgb(187, 222, 251)">
+        <dc:Bounds x="189" y="594" width="1209" height="128" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0076zmh_di" bpmnElement="SequenceFlow_0076zmh">
         <di:waypoint x="287" y="651" />
         <di:waypoint x="325" y="651" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="BusinessRuleTask_0k93qe8_di" bpmnElement="Task_03hk1p2">
-        <dc:Bounds x="325" y="611" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="StartEvent_0gjnq8b_di" bpmnElement="StartEvent_1" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
-        <dc:Bounds x="251" y="633" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="241" y="676" width="57" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ExclusiveGateway_1f2dgfh_di" bpmnElement="ExclusiveGateway_1f2dgfh" isMarkerVisible="true">
-        <dc:Bounds x="631" y="626" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="616" y="675" width="35" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_1qj6a82_di" bpmnElement="SequenceFlow_1qj6a82">
         <di:waypoint x="425" y="651" />
         <di:waypoint x="631" y="651" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="EndEvent_0iyjp4e_di" bpmnElement="EndEvent_0iyjp4e">
-        <dc:Bounds x="717" y="667" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="696" y="705" width="78" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0q51oxl_di" bpmnElement="SequenceFlow_0q51oxl" bioc:stroke="#E53935" bioc:fill="#FFCDD2">
         <di:waypoint x="656" y="676" />
         <di:waypoint x="656" y="685" />
         <di:waypoint x="717" y="685" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="677" y="668" width="16" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_0c7i80g_di" bpmnElement="SequenceFlow_0c7i80g" bioc:stroke="#FB8C00" bioc:fill="#FFE0B2">
-        <di:waypoint x="656" y="626" />
-        <di:waypoint x="656" y="577" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="663" y="606" width="35" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0x10klc_di" bpmnElement="SequenceFlow_0x10klc" bioc:stroke="#43A047" bioc:fill="#C8E6C9">
@@ -502,54 +472,120 @@ response.pizzaSheetURL;</camunda:script>
           <dc:Bounds x="717" y="633" width="29" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ServiceTask_0wsr3k9_di" bpmnElement="Task_0s3scn4">
-        <dc:Bounds x="782" y="611" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="UserTask_14xg4um_di" bpmnElement="Task_1g2qcye">
-        <dc:Bounds x="606" y="497" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_184aufx_di" bpmnElement="SequenceFlow_184aufx">
         <di:waypoint x="882" y="651" />
         <di:waypoint x="902" y="651" />
         <di:waypoint x="902" y="784" />
         <di:waypoint x="956" y="784" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="UserTask_1t1rkkt_di" bpmnElement="Task_11eiz81">
-        <dc:Bounds x="956" y="744" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0vu4i4d_di" bpmnElement="SequenceFlow_0vu4i4d">
-        <di:waypoint x="1006" y="744" />
-        <di:waypoint x="1006" y="421" />
-        <di:waypoint x="1030" y="421" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="UserTask_1wwtrxf_di" bpmnElement="Task_1fcf3cg">
-        <dc:Bounds x="1030" y="381" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_046dlho_di" bpmnElement="SequenceFlow_046dlho">
-        <di:waypoint x="1130" y="421" />
-        <di:waypoint x="1151" y="421" />
-        <di:waypoint x="1151" y="651" />
-        <di:waypoint x="1171" y="651" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="EndEvent_0jbhup8_di" bpmnElement="EndEvent_0jbhup8">
-        <dc:Bounds x="1319" y="633" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1300" y="676" width="75" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0b9uqwj_di" bpmnElement="SequenceFlow_0b9uqwj">
         <di:waypoint x="1271" y="651" />
         <di:waypoint x="1319" y="651" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="SendTask_0zaaofk_di" bpmnElement="Task_1oza4je">
-        <dc:Bounds x="1171" y="611" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0z0drpe_di" bpmnElement="SequenceFlow_0z0drpe">
         <di:waypoint x="606" y="537" />
         <di:waypoint x="585" y="537" />
         <di:waypoint x="585" y="581" />
         <di:waypoint x="643" y="639" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0c7i80g_di" bpmnElement="SequenceFlow_0c7i80g" bioc:stroke="#FB8C00" bioc:fill="#FFE0B2">
+        <di:waypoint x="656" y="626" />
+        <di:waypoint x="656" y="577" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="663" y="606" width="35" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0vu4i4d_di" bpmnElement="SequenceFlow_0vu4i4d">
+        <di:waypoint x="1006" y="744" />
+        <di:waypoint x="1006" y="421" />
+        <di:waypoint x="1030" y="421" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_046dlho_di" bpmnElement="SequenceFlow_046dlho">
+        <di:waypoint x="1130" y="421" />
+        <di:waypoint x="1151" y="421" />
+        <di:waypoint x="1151" y="651" />
+        <di:waypoint x="1171" y="651" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_14xg4um_di" bpmnElement="Task_1g2qcye">
+        <dc:Bounds x="606" y="497" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_1wwtrxf_di" bpmnElement="Task_1fcf3cg">
+        <dc:Bounds x="1030" y="381" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_1t1rkkt_di" bpmnElement="Task_11eiz81">
+        <dc:Bounds x="956" y="744" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0jbhup8_di" bpmnElement="EndEvent_0jbhup8">
+        <dc:Bounds x="1319" y="633" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1300" y="676" width="75" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SendTask_0zaaofk_di" bpmnElement="Task_1oza4je">
+        <dc:Bounds x="1171" y="611" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_1f2dgfh_di" bpmnElement="ExclusiveGateway_1f2dgfh" isMarkerVisible="true">
+        <dc:Bounds x="631" y="626" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="616" y="675" width="35" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_0wsr3k9_di" bpmnElement="Task_0s3scn4">
+        <dc:Bounds x="782" y="611" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0iyjp4e_di" bpmnElement="EndEvent_0iyjp4e">
+        <dc:Bounds x="717" y="667" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="696" y="705" width="78" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_0gjnq8b_di" bpmnElement="StartEvent_1" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
+        <dc:Bounds x="251" y="633" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="241" y="676" width="57" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BusinessRuleTask_0k93qe8_di" bpmnElement="Task_03hk1p2">
+        <dc:Bounds x="325" y="611" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SubProcess_02rq6mu_di" bpmnElement="SubProcess_0r59a3l" isExpanded="true" bioc:stroke="rgb(30, 136, 229)" bioc:fill="rgb(187, 222, 251)">
+        <dc:Bounds x="290" y="400" width="290" height="130" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1epu7cp_di" bpmnElement="SequenceFlow_1epu7cp">
+        <di:waypoint x="480" y="470" />
+        <di:waypoint x="512" y="470" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0fsp9b9_di" bpmnElement="SequenceFlow_0fsp9b9">
+        <di:waypoint x="348" y="470" />
+        <di:waypoint x="380" y="470" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_01f1bid_di" bpmnElement="Task_1ovyzlq">
+        <dc:Bounds x="380" y="430" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_0os3p8h_di" bpmnElement="StartEvent_1fyekfd" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
+        <dc:Bounds x="312" y="452" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="302" y="495" width="57" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_1rg5rty_di" bpmnElement="EndEvent_062iwv8" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
+        <dc:Bounds x="512" y="452" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="486" y="495" width="89" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_0v90nw7_di" bpmnElement="Participant_1m1uurc" isHorizontal="true">
+        <dc:Bounds x="129" y="81" width="1269" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_0g3x39j_di" bpmnElement="Participant_0g3x39j" isHorizontal="true" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
+        <dc:Bounds x="129" y="179" width="470" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_1r5rv4o_di" bpmnElement="Participant_1r5rv4o" isHorizontal="true">
+        <dc:Bounds x="1098" y="179" width="300" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_1wc558g_di" bpmnElement="Participant_1wc558g" isHorizontal="true">
+        <dc:Bounds x="129" y="266" width="1269" height="60" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="MessageFlow_15mxubn_di" bpmnElement="MessageFlow_15mxubn" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
         <di:waypoint x="269" y="326" />
         <di:waypoint x="269" y="633" />
@@ -592,15 +628,6 @@ response.pizzaSheetURL;</camunda:script>
           <dc:Bounds x="702" y="154" width="65" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Participant_0g3x39j_di" bpmnElement="Participant_0g3x39j" isHorizontal="true" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
-        <dc:Bounds x="129" y="179" width="470" height="60" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Participant_1r5rv4o_di" bpmnElement="Participant_1r5rv4o" isHorizontal="true">
-        <dc:Bounds x="1098" y="179" width="300" height="60" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Participant_1wc558g_di" bpmnElement="Participant_1wc558g" isHorizontal="true">
-        <dc:Bounds x="129" y="266" width="1269" height="60" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="MessageFlow_08pgghj_di" bpmnElement="MessageFlow_08pgghj">
         <di:waypoint x="832" y="611" />
         <di:waypoint x="832" y="326" />
@@ -633,32 +660,6 @@ response.pizzaSheetURL;</camunda:script>
           <dc:Bounds x="176" y="245" width="67" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="SubProcess_02rq6mu_di" bpmnElement="SubProcess_0r59a3l" isExpanded="true" bioc:stroke="rgb(30, 136, 229)" bioc:fill="rgb(187, 222, 251)">
-        <dc:Bounds x="290" y="400" width="290" height="130" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0fsp9b9_di" bpmnElement="SequenceFlow_0fsp9b9">
-        <di:waypoint x="348" y="470" />
-        <di:waypoint x="380" y="470" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_1epu7cp_di" bpmnElement="SequenceFlow_1epu7cp">
-        <di:waypoint x="480" y="470" />
-        <di:waypoint x="512" y="470" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ServiceTask_01f1bid_di" bpmnElement="Task_1ovyzlq">
-        <dc:Bounds x="380" y="430" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="StartEvent_0os3p8h_di" bpmnElement="StartEvent_1fyekfd" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
-        <dc:Bounds x="312" y="452" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="302" y="495" width="57" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="EndEvent_1rg5rty_di" bpmnElement="EndEvent_062iwv8" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
-        <dc:Bounds x="512" y="452" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="486" y="495" width="89" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="MessageFlow_18fp9fi_di" bpmnElement="MessageFlow_18fp9fi" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
         <di:waypoint x="330" y="326" />
         <di:waypoint x="330" y="452" />

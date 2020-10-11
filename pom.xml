@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ch.fhnw.digibp</groupId>
-	<artifactId>digibp-camunda-showcases</artifactId>
+	<artifactId>digibp-showcases</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>digibp-camunda-showcases</name>
+	<name>digibp-showcases</name>
 
 	<properties>
 		<java.version>1.8</java.version>

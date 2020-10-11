@@ -121,7 +121,7 @@
   <semantic:message id="Message_15g6c1p" name="Message_VerifyBloodPressure" />
   <semantic:error id="Error_09reou1" name="Error_Emergency" errorCode="Error_Emergency" />
   <semantic:category id="Category_10on8zl">
-    <semantic:categoryValue id="CategoryValue_0zgyprk" value="Sensitive data use" />
+    <semantic:categoryValue id="CategoryValue_0zgyprk" value="Anonymized data use" />
   </semantic:category>
   <semantic:category id="Category_13xxrut">
     <semantic:categoryValue id="CategoryValue_13qgnon" value="Sensitive data use" />
@@ -299,7 +299,7 @@
       <bpmndi:BPMNShape id="_71ff7512-aa3a-4dc2-b0d6-8e5557b86af6" bpmnElement="_da10c6ad-e284-4b91-b4a2-ccf7a42e42d8" color:background-color="#ffffff" color:border-color="#000000">
         <dc:Bounds x="219" y="125" width="527" height="153" />
         <bpmndi:BPMNLabel labelStyle="LS_1559cfe8-92e8-44bd-9b00-a1a96c725175_0" color:color="#000000" triso:defaultBounds="true">
-          <dc:Bounds x="438" y="132" width="90" height="14" />
+          <dc:Bounds x="441" y="132" width="84" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_544a6b9c-eefa-4eea-a610-e233b877c8f2" bpmnElement="_277a8b45-0ab6-43e6-a93a-5bb437674cf3" color:background-color="#ffffff" color:border-color="#000000">

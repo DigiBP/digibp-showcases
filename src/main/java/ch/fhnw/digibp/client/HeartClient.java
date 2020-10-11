@@ -28,7 +28,7 @@ public class HeartClient {
     @Autowired
     TransferService transferService;
 
-    @Value("${camunda-rest.tenantid}")
+    @Value("${camunda-rest.tenant-id}")
     String camundaTenantId;
 
     @Autowired
@@ -45,9 +45,9 @@ public class HeartClient {
                     try {
                         String category = externalTask.getVariable("category");
                         String businessKey = externalTask.getBusinessKey();
-                        String streamIdUserId = (String) transferService.take(businessKey, "streamIdUserId");
-                        String pryvTokenEndpointUser = heartRESTClient.getPryvTokenEndpointUser(streamIdUserId);
-                        heartRESTClient.createAnalysis(pryvTokenEndpointUser, category);
+                        String vaultStreamIdTokenEndpointPatient = (String) transferService.take(businessKey, "vaultStreamIdTokenEndpointPatient");
+                        String pryvTokenEndpointPatient = heartRESTClient.getpryvTokenEndpointPatient(vaultStreamIdTokenEndpointPatient);
+                        heartRESTClient.createAnalysis(pryvTokenEndpointPatient, category);
                         externalTaskService.complete(externalTask);
                     } catch (Exception e) {
                         externalTaskService.handleBpmnError(externalTask, "failed");
@@ -61,9 +61,9 @@ public class HeartClient {
                     try {
                         String category = externalTask.getVariable("category");
                         String businessKey = externalTask.getBusinessKey();
-                        String streamIdUserId = (String) transferService.peek(businessKey, "streamIdUserId");
-                        String pryvTokenEndpointUser = heartRESTClient.getPryvTokenEndpointUser(streamIdUserId);
-                        heartRESTClient.createAnalysis(pryvTokenEndpointUser, category);
+                        String vaultStreamIdTokenEndpointPatient = (String) transferService.peek(businessKey, "vaultStreamIdTokenEndpointPatient");
+                        String pryvTokenEndpointPatient = heartRESTClient.getpryvTokenEndpointPatient(vaultStreamIdTokenEndpointPatient);
+                        heartRESTClient.createAnalysis(pryvTokenEndpointPatient, category);
                         Map<String, Object> variables = new HashMap<>();
                         variables.put("eventId", businessKey);
                         variables.put("sharingViewURL", heartConfig.getBaseURL()+"heart/sharing/"+businessKey+"/");
@@ -80,9 +80,9 @@ public class HeartClient {
                     try {
                         String diagnosis = externalTask.getVariable("diagnosis");
                         String businessKey = externalTask.getBusinessKey();
-                        String streamIdUserId = (String) transferService.take(businessKey, "streamIdUserId");
-                        String pryvTokenEndpointUser = heartRESTClient.getPryvTokenEndpointUser(streamIdUserId);
-                        heartRESTClient.createDiagnosis(pryvTokenEndpointUser, diagnosis);
+                        String vaultStreamIdTokenEndpointPatient = (String) transferService.take(businessKey, "vaultStreamIdTokenEndpointPatient");
+                        String pryvTokenEndpointPatient = heartRESTClient.getpryvTokenEndpointPatient(vaultStreamIdTokenEndpointPatient);
+                        heartRESTClient.createDiagnosis(pryvTokenEndpointPatient, diagnosis);
                         externalTaskService.complete(externalTask);
                     } catch (Exception e) {
                         externalTaskService.handleBpmnError(externalTask, "failed");
@@ -96,9 +96,9 @@ public class HeartClient {
                     try {
                         String diagnosis = externalTask.getVariable("diagnosis");
                         String businessKey = externalTask.getBusinessKey();
-                        String streamIdUserId = (String) transferService.take(businessKey, "streamIdUserId");
-                        String pryvTokenEndpointUser = heartRESTClient.getPryvTokenEndpointUser(streamIdUserId);
-                        heartRESTClient.createDiagnosis(pryvTokenEndpointUser, diagnosis);
+                        String vaultStreamIdTokenEndpointPatient = (String) transferService.take(businessKey, "vaultStreamIdTokenEndpointPatient");
+                        String pryvTokenEndpointPatient = heartRESTClient.getpryvTokenEndpointPatient(vaultStreamIdTokenEndpointPatient);
+                        heartRESTClient.createDiagnosis(pryvTokenEndpointPatient, diagnosis);
                         externalTaskService.complete(externalTask);
                     } catch (Exception e) {
                         externalTaskService.handleBpmnError(externalTask, "failed");
@@ -111,10 +111,11 @@ public class HeartClient {
                 .handler((ExternalTask externalTask, ExternalTaskService externalTaskService) -> {
                     try {
                         String businessKey = externalTask.getBusinessKey();
-                        String streamIdUserId = (String) transferService.peek(businessKey, "streamIdUserId");
-                        String pryvTokenEndpointUser = heartRESTClient.getPryvTokenEndpointUser(streamIdUserId);
+                        String vaultStreamIdTokenEndpointPatient = (String) transferService.peek(businessKey, "vaultStreamIdTokenEndpointPatient");
+                        String pryvTokenEndpointPatient = heartRESTClient.getpryvTokenEndpointPatient(vaultStreamIdTokenEndpointPatient);
                         Map<String, Object> variables = new HashMap<>();
-                        variables.put("patientEmail", Variables.stringValue(heartRESTClient.getPatientEmail(pryvTokenEndpointUser), true));
+                        variables.put("patientEmail", Variables.stringValue(heartRESTClient.getPatientEmail(pryvTokenEndpointPatient), true));
+                        variables.put("patientName", Variables.stringValue(heartRESTClient.getPatientName(pryvTokenEndpointPatient), true));
                         variables.put("baseURL", Variables.stringValue(heartConfig.getBaseURL(), false));
                         externalTaskService.complete(externalTask, variables);
                     } catch (Exception e) {

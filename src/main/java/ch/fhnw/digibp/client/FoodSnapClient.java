@@ -31,7 +31,7 @@ public class FoodSnapClient {
     @Autowired
     FileSenderService fileSenderService;
 
-    @Value("${camunda-rest.tenantid}")
+    @Value("${camunda-rest.tenant-id}")
     String camundaTenantId;
 
     @Value("${service.ibm-watson-visual-recognition.URL}")

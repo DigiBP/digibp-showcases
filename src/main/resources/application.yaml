@@ -1,6 +1,6 @@
 camunda-rest:
   url: ${CAMUNDA_REST_URL:https://digibp.herokuapp.com/rest}
-  tenantid: ${CAMUNDA_TENANT_ID:showcase}
+  tenant-id: ${CAMUNDA_TENANT_ID:showcase}
 
 spring:
   profiles:

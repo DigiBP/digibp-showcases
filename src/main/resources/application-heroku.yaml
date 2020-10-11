@@ -4,4 +4,4 @@ service:
     APIKEY: ${IBM_WATSON_VISUAL_RECOGNITION_APIKEY}
 
 pryv:
-  token-endpoint: ${PRYV_TOKEN_ENDPOINT}
+  token-endpoint-vault: ${PRYV_TOKEN_ENDPOINT_VAULT}
