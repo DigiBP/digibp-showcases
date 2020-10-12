@@ -25,15 +25,15 @@ public class HeartRESTClient {
     @Value("${camunda-rest.url}")
     String camundaRestUrl;
 
-    public String getpryvTokenEndpointPatient(String vaultStreamIdTokenEndpointPatient){
-        return Unirest.get(PryvUtil.getEndpoint(pryvTokenEndpointVault) + "events?streams="+vaultStreamIdTokenEndpointPatient+"&limit=1")
+    public String getpryvTokenEndpointPatient(String vaultStreamIdTokenEndpointPatient) {
+        return Unirest.get(PryvUtil.getEndpoint(pryvTokenEndpointVault) + "events?streams=" + vaultStreamIdTokenEndpointPatient + "&limit=1")
                 .header("Authorization", PryvUtil.getToken(pryvTokenEndpointVault))
                 .asJson()
                 .getBody()
                 .getObject().getJSONArray("events").getJSONObject(0).getString("content");
     }
 
-    public void registerUserInVault(String pryvTokenEndpoint){
+    public void registerUserInVault(String pryvTokenEndpoint) {
         String jsonBody = "[\n" +
                 "    {\n" +
                 "        \"method\": \"streams.create\",\n" +
@@ -45,8 +45,8 @@ public class HeartRESTClient {
                 "    {\n" +
                 "        \"method\": \"streams.create\",\n" +
                 "        \"params\": {\n" +
-                "            \"id\": \""+PryvUtil.getUserId(pryvTokenEndpoint)+"\",\n" +
-                "            \"name\": \""+PryvUtil.getUserName(pryvTokenEndpoint)+"\",\n" +
+                "            \"id\": \"" + PryvUtil.getUserId(pryvTokenEndpoint) + "\",\n" +
+                "            \"name\": \"" + PryvUtil.getUserName(pryvTokenEndpoint) + "\",\n" +
                 "            \"parentId\": \"heart-access-token\"\n" +
                 "        }\n" +
                 "    },\n" +
@@ -54,10 +54,10 @@ public class HeartRESTClient {
                 "        \"method\": \"events.create\",\n" +
                 "        \"params\": {\n" +
                 "            \"streamIds\": [\n" +
-                "                \""+PryvUtil.getUserId(pryvTokenEndpoint)+"\"\n" +
+                "                \"" + PryvUtil.getUserId(pryvTokenEndpoint) + "\"\n" +
                 "            ],\n" +
                 "            \"type\": \"credentials/pryv-api-endpoint\",\n" +
-                "            \"content\": \""+pryvTokenEndpoint+"\"\n" +
+                "            \"content\": \"" + pryvTokenEndpoint + "\"\n" +
                 "        }\n" +
                 "    }\n" +
                 "]";
@@ -69,9 +69,9 @@ public class HeartRESTClient {
                 .asString();
     }
 
-    public void registerWebhook(String pryvTokenEndpoint, String webhookUrl){
+    public void registerWebhook(String pryvTokenEndpoint, String webhookUrl) {
         String jsonBody = "{\n" +
-                "    \"url\": \""+webhookUrl+"\"\n" +
+                "    \"url\": \"" + webhookUrl + "\"\n" +
                 "}";
 
         Unirest.post(PryvUtil.getEndpoint(pryvTokenEndpoint) + "webhooks")
@@ -81,13 +81,13 @@ public class HeartRESTClient {
                 .asString();
     }
 
-    public void createAnalysis(String pryvTokenEndpoint, String category){
+    public void createAnalysis(String pryvTokenEndpoint, String category) {
         String jsonBody = "{\n" +
                 "    \"streamIds\": [\n" +
                 "        \"analysis\"\n" +
                 "    ],\n" +
                 "    \"type\": \"note/txt\",\n" +
-                "    \"content\": \"Analysis of the blood pressure category based on the last entry: "+category+"\"\n" +
+                "    \"content\": \"Analysis of the blood pressure category based on the last entry: " + category + "\"\n" +
                 "}";
 
         Unirest.post(PryvUtil.getEndpoint(pryvTokenEndpoint) + "events")
@@ -97,29 +97,29 @@ public class HeartRESTClient {
                 .asString();
     }
 
-    public JSONObject getBloodPressureEvent(String pryvTokenEndpointPatient, String modifiedSince){
-        return Unirest.get(PryvUtil.getEndpoint(pryvTokenEndpointPatient) + "events?streams=blood-pressure&limit=1&modifiedSince="+modifiedSince+"")
+    public JSONObject getBloodPressureEvent(String pryvTokenEndpointPatient, String modifiedSince) {
+        return Unirest.get(PryvUtil.getEndpoint(pryvTokenEndpointPatient) + "events?streams=blood-pressure&limit=1&modifiedSince=" + modifiedSince + "")
                 .header("Authorization", PryvUtil.getToken(pryvTokenEndpointPatient))
                 .asJson()
                 .getBody()
                 .getObject();
     }
 
-    public void initHeartService(String eventId, Integer systolic, Integer diastolic){
-        Unirest.post(camundaRestUrl+"/message")
+    public void initHeartService(String eventId, Integer systolic, Integer diastolic) {
+        Unirest.post(camundaRestUrl + "/message")
                 .header("Content-Type", "application/json")
                 .body("{\n" +
                         "    \"messageName\": \"Message_VerifyBloodPressure\",\n" +
-                        "    \"businessKey\": \""+eventId+"\",\n" +
-                        "    \"tenantId\": \""+camundaTenantId+"\",\n" +
+                        "    \"businessKey\": \"" + eventId + "\",\n" +
+                        "    \"tenantId\": \"" + camundaTenantId + "\",\n" +
                         "    \"resultEnabled\": false,\n" +
                         "    \"processVariables\": {\n" +
                         "        \"systolic\": {\n" +
-                        "            \"value\": "+systolic+",\n" +
+                        "            \"value\": " + systolic + ",\n" +
                         "            \"type\": \"integer\"\n" +
                         "        },\n" +
                         "        \"diastolic\": {\n" +
-                        "            \"value\": "+diastolic+",\n" +
+                        "            \"value\": " + diastolic + ",\n" +
                         "            \"type\": \"integer\"\n" +
                         "        }\n" +
                         "    }\n" +
@@ -127,13 +127,13 @@ public class HeartRESTClient {
                 .asString();
     }
 
-    public void createDiagnosis(String pryvTokenEndpoint, String diagnosis){
+    public void createDiagnosis(String pryvTokenEndpoint, String diagnosis) {
         String jsonBody = "{\n" +
                 "    \"streamIds\": [\n" +
                 "        \"diagnosis\"\n" +
                 "    ],\n" +
                 "    \"type\": \"note/txt\",\n" +
-                "    \"content\": \""+diagnosis+"\"\n" +
+                "    \"content\": \"" + diagnosis + "\"\n" +
                 "}";
 
         Unirest.post(PryvUtil.getEndpoint(pryvTokenEndpoint) + "events")
@@ -143,7 +143,7 @@ public class HeartRESTClient {
                 .asString();
     }
 
-    public String getPatientEmail(String pryvTokenEndpointPatient){
+    public String getPatientEmail(String pryvTokenEndpointPatient) {
         String email = "";
         JSONObject jsonObject = Unirest.get(PryvUtil.getEndpoint(pryvTokenEndpointPatient) + "events?streams=contact-email&limit=1")
                 .header("Authorization", PryvUtil.getToken(pryvTokenEndpointPatient))
@@ -151,13 +151,13 @@ public class HeartRESTClient {
                 .getBody()
                 .getObject();
 
-        if(!jsonObject.getJSONArray("events").isEmpty()) {
+        if (!jsonObject.getJSONArray("events").isEmpty()) {
             email = jsonObject.getJSONArray("events").getJSONObject(0).getString("content");
         }
         return email;
     }
 
-    public String getPatientName(String pryvTokenEndpointPatient){
+    public String getPatientName(String pryvTokenEndpointPatient) {
         String email = "";
         JSONObject jsonObject = Unirest.get(PryvUtil.getEndpoint(pryvTokenEndpointPatient) + "events?streams=contact-name&limit=1")
                 .header("Authorization", PryvUtil.getToken(pryvTokenEndpointPatient))
@@ -165,15 +165,15 @@ public class HeartRESTClient {
                 .getBody()
                 .getObject();
 
-        if(!jsonObject.getJSONArray("events").isEmpty()) {
+        if (!jsonObject.getJSONArray("events").isEmpty()) {
             email = jsonObject.getJSONArray("events").getJSONObject(0).getString("content");
         }
         return email;
     }
 
-    public String createExpertSharing(String pryvTokenEndpointPatient){
+    public String createExpertSharing(String pryvTokenEndpointPatient) {
         String jsonBody = "{\n" +
-                "    \"name\": \"Expert sharing "+new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date())+"\",\n" +
+                "    \"name\": \"Heart service expert sharing " + new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date()) + "\",\n" +
                 "    \"expireAfter\": 86400,\n" +
                 "    \"permissions\": [\n" +
                 "        {\n" +
@@ -205,8 +205,8 @@ public class HeartRESTClient {
 
         String pryvTokenSharing = "";
 
-        if(!jsonObject.getJSONArray("access").isEmpty()) {
-            pryvTokenSharing = jsonObject.getJSONObject("access").getJSONObject("token").toString();
+        if(!jsonObject.getJSONObject("access").isEmpty()) {
+            pryvTokenSharing = jsonObject.getJSONObject("access").getString("token");
         }
         return PryvUtil.getTokenEndpoint(pryvTokenSharing, PryvUtil.getEndpoint(pryvTokenEndpointPatient));
     }
