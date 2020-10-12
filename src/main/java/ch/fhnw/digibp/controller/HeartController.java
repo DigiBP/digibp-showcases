@@ -39,8 +39,8 @@ public class HeartController {
     public void sharingViewURL(@PathVariable("eventId") String eventId, HttpServletResponse response) throws IOException {
         String vaultStreamIdTokenEndpointPatient = (String) transferService.peek(eventId, "vaultStreamIdTokenEndpointPatient");
         String url = heartConfig.getBaseURL();
-        String pryvTokenEndpoint = heartRESTClient.getpryvTokenEndpointPatient(vaultStreamIdTokenEndpointPatient);
-        url = url + "heart/sharing/?pryvApiEndpoint=" + pryvTokenEndpoint;
+        String pryvTokenEndpointPatient = heartRESTClient.getpryvTokenEndpointPatient(vaultStreamIdTokenEndpointPatient);
+        url = url + "heart/sharing/?pryvApiEndpoint=" + heartRESTClient.createExpertSharing(pryvTokenEndpointPatient);
         response.sendRedirect(url);
     }
 

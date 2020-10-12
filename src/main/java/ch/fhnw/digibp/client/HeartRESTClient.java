@@ -11,6 +11,9 @@ import kong.unirest.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Component
 public class HeartRESTClient {
     @Value("${pryv.token-endpoint-vault}")
@@ -166,5 +169,45 @@ public class HeartRESTClient {
             email = jsonObject.getJSONArray("events").getJSONObject(0).getString("content");
         }
         return email;
+    }
+
+    public String createExpertSharing(String pryvTokenEndpointPatient){
+        String jsonBody = "{\n" +
+                "    \"name\": \"Expert sharing "+new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date())+"\",\n" +
+                "    \"expireAfter\": 86400,\n" +
+                "    \"permissions\": [\n" +
+                "        {\n" +
+                "            \"streamId\": \"contact\",\n" +
+                "            \"level\": \"read\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"streamId\": \"blood-pressure\",\n" +
+                "            \"level\": \"read\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"streamId\": \"analysis\",\n" +
+                "            \"level\": \"read\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"streamId\": \"diagnosis\",\n" +
+                "            \"level\": \"read\"\n" +
+                "        }\n" +
+                "    ]\n" +
+                "}";
+
+        JSONObject jsonObject = Unirest.post(PryvUtil.getEndpoint(pryvTokenEndpointPatient) + "accesses")
+                .header("Authorization", PryvUtil.getToken(pryvTokenEndpointPatient))
+                .header("Content-Type", "application/json")
+                .body(jsonBody)
+                .asJson()
+                .getBody()
+                .getObject();
+
+        String pryvTokenSharing = "";
+
+        if(!jsonObject.getJSONArray("access").isEmpty()) {
+            pryvTokenSharing = jsonObject.getJSONObject("access").getString("token");
+        }
+        return PryvUtil.getTokenEndpoint(pryvTokenSharing, PryvUtil.getEndpoint(pryvTokenEndpointPatient));
     }
 }
