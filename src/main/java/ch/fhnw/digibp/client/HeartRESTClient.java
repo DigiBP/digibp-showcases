@@ -206,7 +206,7 @@ public class HeartRESTClient {
         String pryvTokenSharing = "";
 
         if(!jsonObject.getJSONArray("access").isEmpty()) {
-            pryvTokenSharing = jsonObject.getJSONObject("access").getString("token");
+            pryvTokenSharing = jsonObject.getJSONArray("access").getJSONObject(0).getString("token");
         }
         return PryvUtil.getTokenEndpoint(pryvTokenSharing, PryvUtil.getEndpoint(pryvTokenEndpointPatient));
     }
