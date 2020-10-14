@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_16dm7al" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.2.0">
+  <bpmn:collaboration id="Collaboration_1u6ov8h">
+    <bpmn:participant id="Participant_02t13bu" name="Data Collection, Usage, Sharing and Storage" />
+    <bpmn:participant id="Participant_0f3umc5" name="Workflow Management and Execution" />
+    <bpmn:participant id="Participant_0pej66n" name="Data/Service Integration" />
+    <bpmn:messageFlow id="Flow_0ntx7iq" sourceRef="Participant_0f3umc5" targetRef="Participant_0pej66n" />
+    <bpmn:messageFlow id="Flow_1u80rtx" sourceRef="Participant_0pej66n" targetRef="Participant_02t13bu" />
+    <bpmn:messageFlow id="Flow_1d03yhz" sourceRef="Participant_02t13bu" targetRef="Participant_0pej66n" />
+    <bpmn:messageFlow id="Flow_1o3bnfp" sourceRef="Participant_0pej66n" targetRef="Participant_0f3umc5" />
+  </bpmn:collaboration>
+  <bpmn:error id="Error_1lkufqq" name="Error_Emergency" errorCode="Error_Emergency" />
+  <bpmn:message id="Message_0hrzpbi" name="Message_VerifyBloodPressure" />
+  <bpmn:error id="Error_17lndjw" name="Error_Emergency" errorCode="Error_Emergency" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1u6ov8h">
+      <bpmndi:BPMNShape id="Participant_1o5eixz_di" bpmnElement="Participant_0f3umc5" isHorizontal="true" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
+        <dc:Bounds x="160" y="80" width="400" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_1huuvd3_di" bpmnElement="Participant_0pej66n" isHorizontal="true" bioc:stroke="rgb(30, 136, 229)" bioc:fill="rgb(187, 222, 251)">
+        <dc:Bounds x="160" y="200" width="400" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_02t13bu_di" bpmnElement="Participant_02t13bu" isHorizontal="true" bioc:stroke="rgb(229, 57, 53)" bioc:fill="rgb(255, 205, 210)">
+        <dc:Bounds x="160" y="320" width="400" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0ntx7iq_di" bpmnElement="Flow_0ntx7iq">
+        <di:waypoint x="230" y="140" />
+        <di:waypoint x="230" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1u80rtx_di" bpmnElement="Flow_1u80rtx">
+        <di:waypoint x="270" y="260" />
+        <di:waypoint x="270" y="320" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1d03yhz_di" bpmnElement="Flow_1d03yhz">
+        <di:waypoint x="440" y="320" />
+        <di:waypoint x="440" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1o3bnfp_di" bpmnElement="Flow_1o3bnfp">
+        <di:waypoint x="490" y="200" />
+        <di:waypoint x="490" y="140" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

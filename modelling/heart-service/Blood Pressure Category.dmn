@@ -18,7 +18,7 @@
         </outputValues>
       </output>
       <rule id="DecisionRule_1llj7w3">
-        <description>Consult Your Doctor Immediately (source: NHLBI, USA)</description>
+        <description>Consult Your Doctor Immediately (source: AHA, USA)</description>
         <inputEntry id="UnaryTests_09xdxlw">
           <text>&gt;180</text>
         </inputEntry>
@@ -30,7 +30,7 @@
         </outputEntry>
       </rule>
       <rule id="DecisionRule_03236dh">
-        <description>Consult Your Doctor Immediately (source: NHLBI, USA)</description>
+        <description>Consult Your Doctor Immediately (source: AHA, USA)</description>
         <inputEntry id="UnaryTests_1f3692h">
           <text>-</text>
         </inputEntry>
@@ -42,7 +42,7 @@
         </outputEntry>
       </rule>
       <rule id="DecisionRule_0m2mfv4">
-        <description>High Blood Pressure (source: NHLBI, USA)</description>
+        <description>High Blood Pressure (source: AHA, USA)</description>
         <inputEntry id="UnaryTests_1qqvtj1">
           <text>[140..180]</text>
         </inputEntry>
@@ -54,7 +54,7 @@
         </outputEntry>
       </rule>
       <rule id="DecisionRule_0txtwik">
-        <description>High Blood Pressure (source: NHLBI, USA)</description>
+        <description>High Blood Pressure (source: AHA, USA)</description>
         <inputEntry id="UnaryTests_1opoh10">
           <text>-</text>
         </inputEntry>
@@ -66,7 +66,7 @@
         </outputEntry>
       </rule>
       <rule id="DecisionRule_0z45xzi">
-        <description>High Blood Pressure (source: NHLBI, USA)</description>
+        <description>High Blood Pressure (source: AHA, USA)</description>
         <inputEntry id="UnaryTests_0xbgokd">
           <text>[130..139]</text>
         </inputEntry>
@@ -78,7 +78,7 @@
         </outputEntry>
       </rule>
       <rule id="DecisionRule_0ymhekp">
-        <description>High Blood Pressure (source: NHLBI, USA)</description>
+        <description>High Blood Pressure (source: AHA, USA)</description>
         <inputEntry id="UnaryTests_1rysc73">
           <text>-</text>
         </inputEntry>
@@ -90,7 +90,7 @@
         </outputEntry>
       </rule>
       <rule id="DecisionRule_0dbyogg">
-        <description>Elevated Blood Pressure (source: NHLBI, USA)</description>
+        <description>Elevated Blood Pressure (source: AHA, USA)</description>
         <inputEntry id="UnaryTests_1ovqspf">
           <text>[120..129]</text>
         </inputEntry>
@@ -114,7 +114,7 @@
         </outputEntry>
       </rule>
       <rule id="DecisionRule_0uly473">
-        <description>Normal Blood Pressure (source: NHLBI, USA)</description>
+        <description>Normal Blood Pressure (source: AHA, USA)</description>
         <inputEntry id="UnaryTests_1emzo85">
           <text>&lt;120</text>
         </inputEntry>
