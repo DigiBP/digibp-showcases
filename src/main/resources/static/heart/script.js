@@ -12,6 +12,11 @@ var authSettings = {
         level: 'manage' // permissions for the app to manage data in stream 'Body'
       },
       {
+        streamId: 'heart-service',
+        defaultName: 'Heart-Service',
+        level: 'manage' // permissions for the app to manage data in stream 'Heart-Service'
+      },
+      {
         streamId: 'contact',
         defaultName: 'Contact',
         level: 'manage' // permissions for the app to manage data in stream 'Contact'

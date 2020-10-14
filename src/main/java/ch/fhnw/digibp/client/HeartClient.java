@@ -90,7 +90,7 @@ public class HeartClient {
                 })
                 .open();
 
-                client.subscribe("DiagnosisMade")
+                client.subscribe("ConsultationMade")
                 .tenantIdIn(camundaTenantId)
                 .handler((ExternalTask externalTask, ExternalTaskService externalTaskService) -> {
                     try {

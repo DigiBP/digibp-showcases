@@ -44,7 +44,7 @@ async function submitForm() {
       params: {
         id: 'analysis',
         name: 'Analysis',
-        parentId: 'heart'
+        parentId: 'heart-service'
       }
     },
     {
@@ -52,7 +52,7 @@ async function submitForm() {
       params: {
         id: 'diagnosis',
         name: 'Diagnosis',
-        parentId: 'heart'
+        parentId: 'heart-service'
       }
     }
   ];
