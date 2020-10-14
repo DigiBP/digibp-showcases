@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" id="Definitions_1k9s8f7" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.2.0">
+  <bpmn:collaboration id="Collaboration_02qnf8u">
+    <bpmn:participant id="Participant_15tfynp" name="Patient&#39;s Web Browser" processRef="Process_1nh7kal" />
+    <bpmn:participant id="Participant_1l7txgn" name="Camunda-Pryv Integrator" processRef="Process_1n0oiwl" />
+    <bpmn:participant id="Participant_0y3m2cp" name="Pryv (Patient&#39;s Account)" />
+    <bpmn:participant id="Participant_0yul7w7" name="Pryv (Heart-Service&#39;s Vault)" />
+    <bpmn:messageFlow id="Flow_1kh90m7" sourceRef="Activity_04cibz7" targetRef="Activity_0swx1lx" />
+    <bpmn:messageFlow id="Flow_0zk2ir5" sourceRef="Activity_0swx1lx" targetRef="Activity_04cibz7" />
+    <bpmn:messageFlow id="Flow_178vjy8" sourceRef="Activity_1vju0gk" targetRef="Participant_0y3m2cp" />
+    <bpmn:messageFlow id="Flow_1kcuaet" sourceRef="Activity_0qtrc1j" targetRef="Activity_1xr8lvz" />
+    <bpmn:messageFlow id="Flow_0ytqvd9" sourceRef="Activity_1xr8lvz" targetRef="Participant_0yul7w7" />
+    <bpmn:messageFlow id="Flow_06mgkr6" sourceRef="Activity_1qklbpq" targetRef="Participant_0y3m2cp" />
+    <bpmn:group id="Group_1nqz1rd" categoryValueRef="CategoryValue_1xgn9wu" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_1nh7kal" isExecutable="true">
+    <bpmn:task id="Activity_0swx1lx" name="Request onboarding">
+      <bpmn:incoming>Flow_0vue7oj</bpmn:incoming>
+      <bpmn:outgoing>Flow_1v3bset</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Activity_0qtrc1j" name="Forward access token">
+      <bpmn:incoming>Flow_1atcody</bpmn:incoming>
+      <bpmn:outgoing>Flow_1i8wkvi</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:startEvent id="Event_0mdipo3" name="Onboarding&#10;requested">
+      <bpmn:outgoing>Flow_0vue7oj</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="Event_1h2cupo" name="Onboarding&#10;finalized">
+      <bpmn:incoming>Flow_1i8wkvi</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:adHocSubProcess id="Activity_1vju0gk" name="Authentication and Consent">
+      <bpmn:incoming>Flow_1v3bset</bpmn:incoming>
+      <bpmn:outgoing>Flow_1atcody</bpmn:outgoing>
+      <bpmn:task id="Activity_03fr1tp" name="Sign-in on Pryv">
+        <bpmn:outgoing>Flow_0k8vgmq</bpmn:outgoing>
+      </bpmn:task>
+      <bpmn:task id="Activity_051wp7a" name="Give app consent on Pryv">
+        <bpmn:incoming>Flow_0k8vgmq</bpmn:incoming>
+      </bpmn:task>
+      <bpmn:sequenceFlow id="Flow_0k8vgmq" sourceRef="Activity_03fr1tp" targetRef="Activity_051wp7a" />
+      <bpmn:textAnnotation id="TextAnnotation_03m2v6k">
+        <bpmn:text>Heart-service(-app) consent to manage:
+- contact (name, email, mobile)
+- body (heart:blood-pressure)
+- heart-service (analysis, diagnosis)</bpmn:text>
+      </bpmn:textAnnotation>
+      <bpmn:association id="Association_1t4vm8d" sourceRef="Activity_051wp7a" targetRef="TextAnnotation_03m2v6k" />
+    </bpmn:adHocSubProcess>
+    <bpmn:sequenceFlow id="Flow_1atcody" sourceRef="Activity_1vju0gk" targetRef="Activity_0qtrc1j" />
+    <bpmn:sequenceFlow id="Flow_1v3bset" sourceRef="Activity_0swx1lx" targetRef="Activity_1vju0gk" />
+    <bpmn:sequenceFlow id="Flow_0vue7oj" sourceRef="Event_0mdipo3" targetRef="Activity_0swx1lx" />
+    <bpmn:sequenceFlow id="Flow_1i8wkvi" sourceRef="Activity_0qtrc1j" targetRef="Event_1h2cupo" />
+  </bpmn:process>
+  <bpmn:process id="Process_1n0oiwl" name="Process 2" isClosed="false" isExecutable="false">
+    <bpmn:serviceTask id="Activity_04cibz7" name="Deliver onboarding web page" implementation="##WebService" />
+    <bpmn:serviceTask id="Activity_1xr8lvz" name="Store access token in Pryv" implementation="##WebService">
+      <bpmn:outgoing>Flow_1ja6834</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_1qklbpq" name="Create notification web-hook on Pryv" implementation="##WebService">
+      <bpmn:incoming>Flow_1ja6834</bpmn:incoming>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1ja6834" sourceRef="Activity_1xr8lvz" targetRef="Activity_1qklbpq" />
+  </bpmn:process>
+  <bpmn:category id="Category_1jm2812">
+    <bpmn:categoryValue id="CategoryValue_1xgn9wu" value="Sensitive personal data use" />
+  </bpmn:category>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_02qnf8u">
+      <bpmndi:BPMNShape id="Participant_15tfynp_di" bpmnElement="Participant_15tfynp" isHorizontal="true">
+        <dc:Bounds x="160" y="390" width="1090" height="177" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1atcody_di" bpmnElement="Flow_1atcody">
+        <di:waypoint x="980" y="479" />
+        <di:waypoint x="1032" y="479" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1v3bset_di" bpmnElement="Flow_1v3bset">
+        <di:waypoint x="382" y="479" />
+        <di:waypoint x="436" y="479" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0vue7oj_di" bpmnElement="Flow_0vue7oj">
+        <di:waypoint x="258" y="479" />
+        <di:waypoint x="286" y="479" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1i8wkvi_di" bpmnElement="Flow_1i8wkvi">
+        <di:waypoint x="1128" y="479" />
+        <di:waypoint x="1162" y="479" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_0swx1lx_di" bpmnElement="Activity_0swx1lx">
+        <dc:Bounds x="286" y="441" width="96" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0qtrc1j_di" bpmnElement="Activity_0qtrc1j">
+        <dc:Bounds x="1032" y="441" width="96" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0mdipo3_di" bpmnElement="Event_0mdipo3">
+        <dc:Bounds x="222" y="461" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="211" y="504" width="58" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1h2cupo_di" bpmnElement="Event_1h2cupo">
+        <dc:Bounds x="1162" y="461" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1151" y="504" width="58" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_062cdrh_di" bpmnElement="Activity_1vju0gk" isExpanded="true">
+        <dc:Bounds x="436" y="415" width="544" height="130" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_03m2v6k_di" bpmnElement="TextAnnotation_03m2v6k">
+        <dc:Bounds x="720" y="450" width="240" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0k8vgmq_di" bpmnElement="Flow_0k8vgmq">
+        <di:waypoint x="558" y="487" />
+        <di:waypoint x="602" y="487" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_03fr1tp_di" bpmnElement="Activity_03fr1tp">
+        <dc:Bounds x="462" y="449" width="96" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_051wp7a_di" bpmnElement="Activity_051wp7a">
+        <dc:Bounds x="602" y="449" width="96" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_1t4vm8d_di" bpmnElement="Association_1t4vm8d">
+        <di:waypoint x="698" y="478" />
+        <di:waypoint x="720" y="474" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Participant_0y3m2cp_di" bpmnElement="Participant_0y3m2cp" isHorizontal="true" bioc:stroke="rgb(229, 57, 53)" bioc:fill="rgb(255, 205, 210)">
+        <dc:Bounds x="160" y="610" width="1240" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_1l7txgn_di" bpmnElement="Participant_1l7txgn" isHorizontal="true" bioc:stroke="rgb(30, 136, 229)" bioc:fill="rgb(187, 222, 251)">
+        <dc:Bounds x="160" y="210" width="1240" height="133" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1ja6834_di" bpmnElement="Flow_1ja6834">
+        <di:waypoint x="1127" y="285" />
+        <di:waypoint x="1284" y="285" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_04cibz7_di" bpmnElement="Activity_04cibz7">
+        <dc:Bounds x="286" y="247" width="96" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1xr8lvz_di" bpmnElement="Activity_1xr8lvz">
+        <dc:Bounds x="1032" y="247" width="96" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1qklbpq_di" bpmnElement="Activity_1qklbpq">
+        <dc:Bounds x="1283" y="247" width="96" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_0yul7w7_di" bpmnElement="Participant_0yul7w7" isHorizontal="true" bioc:stroke="rgb(229, 57, 53)" bioc:fill="rgb(255, 205, 210)">
+        <dc:Bounds x="930" y="110" width="300" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1kh90m7_di" bpmnElement="Flow_1kh90m7">
+        <di:waypoint x="363" y="323" />
+        <di:waypoint x="363" y="441" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0zk2ir5_di" bpmnElement="Flow_0zk2ir5">
+        <di:waypoint x="305" y="441" />
+        <di:waypoint x="305" y="323" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1kcuaet_di" bpmnElement="Flow_1kcuaet">
+        <di:waypoint x="1080" y="441" />
+        <di:waypoint x="1080" y="323" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_178vjy8_di" bpmnElement="Flow_178vjy8">
+        <di:waypoint x="712" y="545" />
+        <di:waypoint x="712" y="610" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ytqvd9_di" bpmnElement="Flow_0ytqvd9">
+        <di:waypoint x="1080" y="247" />
+        <di:waypoint x="1080" y="170" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_06mgkr6_di" bpmnElement="Flow_06mgkr6">
+        <di:waypoint x="1331" y="323" />
+        <di:waypoint x="1331" y="610" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Group_1nqz1rd_di" bpmnElement="Group_1nqz1rd" bioc:stroke="rgb(229, 57, 53)" bioc:fill="rgb(255, 205, 210)">
+        <dc:Bounds x="1010" y="220" width="380" height="113" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1156" y="227" width="88" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

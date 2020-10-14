@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1kkwt9o" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.2.0">
+  <bpmn:collaboration id="Collaboration_0eloc8n">
+    <bpmn:participant id="Participant_1ko3jwj" name="Camunda-Pryv Integrator" processRef="Process_0clkxy8" />
+    <bpmn:participant id="Participant_01e78e4" name="Patient&#39;s Web Browser" processRef="Process_09rdu7d" />
+    <bpmn:participant id="Participant_1ywqsz1" name="Pryv (Patient&#39;s Account)" />
+    <bpmn:participant id="Participant_0oo458a" name="Pryv (Heart-Service&#39;s Vault)" />
+    <bpmn:participant id="Participant_19032l2" name="Heart Service" />
+    <bpmn:messageFlow id="Flow_07srbqu" sourceRef="Activity_1ll2f6q" targetRef="Activity_08npjvh" />
+    <bpmn:messageFlow id="Flow_0cu2t1y" sourceRef="Activity_08npjvh" targetRef="Activity_1ll2f6q" />
+    <bpmn:messageFlow id="Flow_0db9rni" sourceRef="Activity_07d2i0y" targetRef="Participant_1ywqsz1" />
+    <bpmn:messageFlow id="Flow_0mq0upz" sourceRef="Participant_1ywqsz1" targetRef="Activity_1n9e7zk" />
+    <bpmn:messageFlow id="Flow_1shjtoh" sourceRef="Activity_10sp4u1" targetRef="Participant_0oo458a" />
+    <bpmn:messageFlow id="Flow_0s3c4e1" sourceRef="Participant_0oo458a" targetRef="Activity_10sp4u1" />
+    <bpmn:messageFlow id="Flow_0wyr8l1" sourceRef="Activity_0t50m03" targetRef="Participant_19032l2" />
+    <bpmn:group id="Group_0exwryb" categoryValueRef="CategoryValue_1omsesz" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_0clkxy8" name="Process 1" isClosed="false" isExecutable="false">
+    <bpmn:serviceTask id="Activity_1ll2f6q" name="Deliver blood pressure recording web page" implementation="##WebService" />
+    <bpmn:serviceTask id="Activity_10sp4u1" name="Retrieve access token from Pryv">
+      <bpmn:incoming>Flow_10fnj4y</bpmn:incoming>
+      <bpmn:outgoing>Flow_1rungyw</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:receiveTask id="Activity_1n9e7zk" name="Receive notification from Pryv web-hook">
+      <bpmn:outgoing>Flow_10fnj4y</bpmn:outgoing>
+    </bpmn:receiveTask>
+    <bpmn:serviceTask id="Activity_00j5xc8" name="Retrieve new blood pressure recordings from Pryv">
+      <bpmn:incoming>Flow_1rungyw</bpmn:incoming>
+      <bpmn:outgoing>Flow_1jwqz44</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sendTask id="Activity_0t50m03" name="Send message to Heart Service process">
+      <bpmn:incoming>Flow_1ht0e4d</bpmn:incoming>
+    </bpmn:sendTask>
+    <bpmn:serviceTask id="Activity_0nu2fiq" name="Anonymize (code) blood pressure recodrings">
+      <bpmn:incoming>Flow_1jwqz44</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ht0e4d</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_10fnj4y" sourceRef="Activity_1n9e7zk" targetRef="Activity_10sp4u1" />
+    <bpmn:sequenceFlow id="Flow_1rungyw" sourceRef="Activity_10sp4u1" targetRef="Activity_00j5xc8" />
+    <bpmn:sequenceFlow id="Flow_1jwqz44" sourceRef="Activity_00j5xc8" targetRef="Activity_0nu2fiq" />
+    <bpmn:sequenceFlow id="Flow_1ht0e4d" sourceRef="Activity_0nu2fiq" targetRef="Activity_0t50m03" />
+  </bpmn:process>
+  <bpmn:process id="Process_09rdu7d" name="Process 2" isClosed="false" isExecutable="false">
+    <bpmn:task id="Activity_08npjvh" name="Request blood pressure recording">
+      <bpmn:incoming>Flow_0xt01xu</bpmn:incoming>
+      <bpmn:outgoing>Flow_0eqfqhk</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:startEvent id="Event_1lrwckp" name="Blood pressure recording initialised">
+      <bpmn:outgoing>Flow_0xt01xu</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Activity_07d2i0y" name="Record blood pressure">
+      <bpmn:incoming>Flow_0eqfqhk</bpmn:incoming>
+      <bpmn:outgoing>Flow_1avkfjz</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="Event_1h4e46j" name="Blood pressure recorded">
+      <bpmn:incoming>Flow_1avkfjz</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1avkfjz" sourceRef="Activity_07d2i0y" targetRef="Event_1h4e46j" />
+    <bpmn:sequenceFlow id="Flow_0xt01xu" sourceRef="Event_1lrwckp" targetRef="Activity_08npjvh" />
+    <bpmn:sequenceFlow id="Flow_0eqfqhk" sourceRef="Activity_08npjvh" targetRef="Activity_07d2i0y" />
+  </bpmn:process>
+  <bpmn:category id="Category_0oxt3t8">
+    <bpmn:categoryValue id="CategoryValue_1omsesz" value="Sensitive personal data use" />
+  </bpmn:category>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0eloc8n">
+      <bpmndi:BPMNShape id="Participant_1ko3jwj_di" bpmnElement="Participant_1ko3jwj" isHorizontal="true" bioc:stroke="rgb(30, 136, 229)" bioc:fill="rgb(187, 222, 251)">
+        <dc:Bounds x="160" y="160" width="1250" height="145" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_10fnj4y_di" bpmnElement="Flow_10fnj4y">
+        <di:waypoint x="820" y="245" />
+        <di:waypoint x="860" y="245" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1rungyw_di" bpmnElement="Flow_1rungyw">
+        <di:waypoint x="960" y="245" />
+        <di:waypoint x="1000" y="245" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1jwqz44_di" bpmnElement="Flow_1jwqz44">
+        <di:waypoint x="1100" y="245" />
+        <di:waypoint x="1140" y="245" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ht0e4d_di" bpmnElement="Flow_1ht0e4d">
+        <di:waypoint x="1240" y="245" />
+        <di:waypoint x="1290" y="245" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_1ll2f6q_di" bpmnElement="Activity_1ll2f6q">
+        <dc:Bounds x="286" y="207" width="96" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_01svy8j_di" bpmnElement="Activity_10sp4u1">
+        <dc:Bounds x="860" y="205" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0y4usho_di" bpmnElement="Activity_1n9e7zk">
+        <dc:Bounds x="720" y="205" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0m1hd34_di" bpmnElement="Activity_00j5xc8">
+        <dc:Bounds x="1000" y="205" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1mr2pyu_di" bpmnElement="Activity_0t50m03">
+        <dc:Bounds x="1290" y="205" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_197rig3_di" bpmnElement="Activity_0nu2fiq">
+        <dc:Bounds x="1140" y="205" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_01e78e4_di" bpmnElement="Participant_01e78e4" isHorizontal="true">
+        <dc:Bounds x="160" y="340" width="490" height="130" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1avkfjz_di" bpmnElement="Flow_1avkfjz">
+        <di:waypoint x="525" y="399" />
+        <di:waypoint x="582" y="399" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0xt01xu_di" bpmnElement="Flow_0xt01xu">
+        <di:waypoint x="245" y="399" />
+        <di:waypoint x="287" y="399" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0eqfqhk_di" bpmnElement="Flow_0eqfqhk">
+        <di:waypoint x="382" y="399" />
+        <di:waypoint x="429" y="399" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_08npjvh_di" bpmnElement="Activity_08npjvh">
+        <dc:Bounds x="286" y="361" width="96" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1lrwckp_di" bpmnElement="Event_1lrwckp">
+        <dc:Bounds x="214" y="383" width="32" height="32" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="193" y="425" width="74" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_07d2i0y_di" bpmnElement="Activity_07d2i0y">
+        <dc:Bounds x="429" y="361" width="96" height="76" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1h4e46j_di" bpmnElement="Event_1h4e46j">
+        <dc:Bounds x="582" y="381" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="563" y="427" width="74" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_0c108dw_di" bpmnElement="Participant_1ywqsz1" isHorizontal="true" bioc:stroke="rgb(229, 57, 53)" bioc:fill="rgb(255, 205, 210)">
+        <dc:Bounds x="160" y="500" width="690" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_0oo458a_di" bpmnElement="Participant_0oo458a" isHorizontal="true" bioc:stroke="rgb(229, 57, 53)" bioc:fill="rgb(255, 205, 210)">
+        <dc:Bounds x="760" y="70" width="300" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_0xrzxnr_di" bpmnElement="Participant_19032l2" isHorizontal="true" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
+        <dc:Bounds x="1090" y="70" width="320" height="60" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_07srbqu_di" bpmnElement="Flow_07srbqu">
+        <di:waypoint x="363" y="283" />
+        <di:waypoint x="363" y="361" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0cu2t1y_di" bpmnElement="Flow_0cu2t1y">
+        <di:waypoint x="305" y="361" />
+        <di:waypoint x="305" y="283" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0db9rni_di" bpmnElement="Flow_0db9rni">
+        <di:waypoint x="477" y="437" />
+        <di:waypoint x="477" y="500" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0mq0upz_di" bpmnElement="Flow_0mq0upz">
+        <di:waypoint x="770" y="500" />
+        <di:waypoint x="770" y="285" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1shjtoh_di" bpmnElement="Flow_1shjtoh">
+        <di:waypoint x="880" y="205" />
+        <di:waypoint x="880" y="130" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0s3c4e1_di" bpmnElement="Flow_0s3c4e1">
+        <di:waypoint x="940" y="130" />
+        <di:waypoint x="940" y="205" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wyr8l1_di" bpmnElement="Flow_0wyr8l1">
+        <di:waypoint x="1340" y="205" />
+        <di:waypoint x="1340" y="130" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Group_0exwryb_di" bpmnElement="Group_0exwryb" bioc:stroke="rgb(229, 57, 53)" bioc:fill="rgb(255, 205, 210)">
+        <dc:Bounds x="840" y="170" width="430" height="125" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1011" y="177" width="88" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
