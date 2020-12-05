@@ -166,7 +166,7 @@
         <bpmn:targetRef>DataStoreReference_1qfgu4m</bpmn:targetRef>
       </bpmn:dataOutputAssociation>
     </bpmn:manualTask>
-    <bpmn:businessRuleTask id="Task_03hk1p2" name="Score payment" camunda:resultVariable="scoringResult" camunda:decisionRef="Decision_0gbhz03" camunda:mapDecisionResult="singleResult">
+    <bpmn:businessRuleTask id="Task_03hk1p2" name="Score payment" camunda:resultVariable="scoringResult" camunda:decisionRef="Decision_Scoring" camunda:mapDecisionResult="singleResult">
       <bpmn:extensionElements>
         <camunda:inputOutput>
           <camunda:inputParameter name="orderVolume">
