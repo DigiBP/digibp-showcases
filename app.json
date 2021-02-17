@@ -2,7 +2,7 @@
   "env": {
     "CAMUNDA_REST_URL": {
       "description": "Camunda REST URL",
-      "value": "https://digibp.herokuapp.com/rest"
+      "value": "https://digibp.herokuapp.com/engine-rest"
     },
     "CAMUNDA_TENANT_ID": {
       "description": "Camunda Tenant ID",
