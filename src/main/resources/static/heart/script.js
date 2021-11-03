@@ -1,4 +1,5 @@
 var connection = null;
+var username = null;
 
 var authSettings = {
   spanButtonID: 'pryv-button', // span id the DOM that will be replaced by the Service specific button
@@ -35,10 +36,10 @@ function pryvAuthStateChange(state) { // called each time the authentication sta
   console.log('##pryvAuthStateChange', state);
   if (state.id === Pryv.Browser.AuthStates.AUTHORIZED) {
     connection = new Pryv.Connection(state.apiEndpoint);
-    username = state.displayName;
+    username = state.username;
     authorized();
   }
-  if (state.id === Pryv.Browser.AuthStates.INITIALIZED) {
+  if (state.id === Pryv.Browser.AuthStates.NEED_SIGNIN) {
     connection = null;
     showLoginMessage();
   }

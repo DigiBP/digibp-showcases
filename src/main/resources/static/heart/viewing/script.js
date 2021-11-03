@@ -31,7 +31,6 @@ const apiEndpoint = urlParams.get('pryvApiEndpoint');
 const serviceInfoUrl = urlParams.get('pryvServiceInfoURL') || 'https://reg.pryv.me/service/info';
 
 var service = null; // will be initialized after setupAuth;
-var username = null; // will be inialized after AUTHORIZED auth State is received
 window.onload = async (event) => {
   
   if (apiEndpoint != null) { // if apiEndpoint then we are in "View only mode"
@@ -104,7 +103,7 @@ function addTableEvent(table, event, items) {
   const date = new Date(event.time * 1000); // add date of the fetched events
   const dateText = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate() + ' ' + pad(date.getHours()) + ':' + pad(date.getMinutes());
 
-  const row = table.insertRow(-1);
+  const row = table.getElementsByTagName('tbody')[0].insertRow(-1);
   row.insertCell(-1).innerHTML = dateText;
   for (const item of items) {
     row.insertCell(-1).innerHTML = item;
@@ -190,7 +189,7 @@ async function addListAccess(table, access) { // add permissions to the sharings
 
   const deleteLink = '<a href="" onclick="javascript:deleteSharing(\'' + access.id + '\');return false;">' + access.name + '</a>';
 
-  const row = table.insertRow(-1);
+  const row = table.getElementsByTagName('tbody')[0].insertRow(-1);
   row.insertCell(-1).innerHTML = deleteLink;
   row.insertCell(-1).innerHTML = permissions.join(', ');
   row.insertCell(-1).innerHTML = sharingLink;
