@@ -14,8 +14,8 @@
     "IBM_WATSON_VISUAL_RECOGNITION_APIKEY": {
       "description": "IBM WATSON VISUAL API Key"
     },
-    "PRYV_TOKEN_ENDPOINT": {
-      "description": "Pryv Token and Endpoint"
+    "PRYV_TOKEN_ENDPOINT_VAULT": {
+      "description": "Pryv Token VAULT"
     }
   }
 }
