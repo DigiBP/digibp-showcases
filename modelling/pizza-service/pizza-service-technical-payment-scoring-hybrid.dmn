@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" id="Definitions_0dppnm6" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.0.0">
+  <decision id="Decision_Scoring_hybrid" name="Payment Scoring Hybrid">
+    <decisionTable id="decisionTable_1" hitPolicy="FIRST">
+      <input id="input_1" label="Legal Entity">
+        <inputExpression id="inputExpression_1" typeRef="string">
+          <text>legalEntity</text>
+        </inputExpression>
+        <inputValues id="UnaryTests_04rwo3q">
+          <text>"juristical","private"</text>
+        </inputValues>
+      </input>
+      <input id="InputClause_0hc887y" label="Order Volume">
+        <inputExpression id="LiteralExpression_17ilkcs" typeRef="double" expressionLanguage="JavaScript">
+          <text>Number(pizzaPrice)</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0wri7fr" label="Payment Method">
+        <inputExpression id="LiteralExpression_04rp1ff" typeRef="string">
+          <text>paymentMethod</text>
+        </inputExpression>
+        <inputValues id="UnaryTests_0wrnjke">
+          <text>"cash","prepayment","invoice","creditcard","twint"</text>
+        </inputValues>
+      </input>
+      <output id="output_1" label="Scoring" name="scoring" typeRef="string">
+        <outputValues id="UnaryTests_10swbbo">
+          <text>"green","orange","red"</text>
+        </outputValues>
+      </output>
+      <output id="OutputClause_0un12k1" label="Explanation" name="explanation" typeRef="string" />
+      <rule id="DecisionRule_1bffnck">
+        <inputEntry id="UnaryTests_02e6dw9">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0sm97ey">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1jmq5ak">
+          <text>"prepayment"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1cyaitg">
+          <text>"green"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_01bu9dp">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1qh27y1">
+        <description></description>
+        <inputEntry id="UnaryTests_18u1m3h">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0czky9s">
+          <text>&lt; 500</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_03jykpi">
+          <text>"cash"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1dmm6dl">
+          <text>"green"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_02nwfi7">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0udrah9">
+        <inputEntry id="UnaryTests_1y63cpn">
+          <text>"private"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_06fblsl">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_14ri0c2">
+          <text>"twint"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1rqlf5q">
+          <text>"green"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1no19p3">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0nh1vln">
+        <description></description>
+        <inputEntry id="UnaryTests_10s6awa">
+          <text>"private"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0dsev84">
+          <text>&lt; 100</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0zr1aif">
+          <text>"invoice"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_119anq9">
+          <text>"green"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_125ps9l">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1ox5fd1">
+        <description></description>
+        <inputEntry id="UnaryTests_0abg0ct">
+          <text>"juristical"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_00trcmx">
+          <text>&lt; 300</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_019862q">
+          <text>"invoice"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_06papw2">
+          <text>"green"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0qwooer">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0k9zukl">
+        <description></description>
+        <inputEntry id="UnaryTests_02z3v02">
+          <text>"private"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_174ppff">
+          <text>&lt; 300</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_07uh77o">
+          <text>"creditcard"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1ggema7">
+          <text>"green"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1kka8k2">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0x7wmiz">
+        <description></description>
+        <inputEntry id="UnaryTests_1ffjatg">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0y2zj5p">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ju1mqr">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0pxv5eb">
+          <text>"orange"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1k58q72">
+          <text></text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_06u5jsi">
+      <dmndi:DMNShape id="DMNShape_1t2ibtk" dmnElementRef="Decision_Scoring_hybrid">
+        <dc:Bounds height="80" width="180" x="157" y="81" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>
