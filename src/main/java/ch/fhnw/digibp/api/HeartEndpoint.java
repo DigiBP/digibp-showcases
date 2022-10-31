@@ -48,7 +48,7 @@ public class HeartEndpoint {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Boolean postOnboarding(HttpServletRequest httpServletRequest, @RequestBody OnboardingRequest onboardingRequest) {
         heartRESTClient.registerUserInVault(onboardingRequest.pryvTokenEndpoint);
-        String webhookUrl = heartConfig.getBaseURL(httpServletRequest) + "/api/heart/v1/webhook/" + PryvUtil.getUserId(onboardingRequest.pryvTokenEndpoint);
+        String webhookUrl = heartConfig.getBaseURL(httpServletRequest) + "api/heart/v1/webhook/" + PryvUtil.getUserId(onboardingRequest.pryvTokenEndpoint);
         heartRESTClient.registerWebhook(onboardingRequest.pryvTokenEndpoint, webhookUrl);
         return Boolean.TRUE;
     }
